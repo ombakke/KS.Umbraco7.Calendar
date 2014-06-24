@@ -1,0 +1,15 @@
+﻿{
+	propertyEditors:[
+		{
+			name: "KS Kalender",
+			alias: "KS.Umbraco7.Calendar",
+			editor:{
+				view: "~/app_plugins/KS.Umbraco7.Calendar/editor.html",
+				valueType: "JSON"
+			}
+		}
+	],
+	javascript: [
+		"~/app_plugins/KS.Umbraco7.Calendar/editor.controller.js"
+	]
+}
