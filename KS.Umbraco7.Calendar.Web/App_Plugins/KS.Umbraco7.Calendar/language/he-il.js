@@ -34,7 +34,7 @@
     "single": "Single",
     "startDate": "Start date",
     "endDate": "End date",
-    "recursive": "Recursive",
+    "recurrence": "Recurrence",
     "every": "Every",
     "weekOn": "week on"
 }

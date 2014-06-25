@@ -18,7 +18,7 @@
 
 
     //using this as default data
-    var emptyModel = '{ recursive: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1" }';
+    var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1" }';
 
     if (!angular.isObject($scope.model.value)) {
         $scope.model.value = eval('(' + emptyModel + ')');

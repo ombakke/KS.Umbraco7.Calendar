@@ -34,7 +34,7 @@
     "single": "Wneste",
     "startDate": "Startdato",
     "endDate": "Sluttdato",
-    "recursive": "Rekursiv",
+    "recurrence": "Gjentagelse",
     "every": "Hver",
     "weekOn": "uke på"
 }
