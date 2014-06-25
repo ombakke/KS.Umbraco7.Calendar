@@ -1,0 +1,94 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KS.Umbraco7.Calendar.Core
+{
+
+    /// <summary>
+    /// Extentions for DateTime
+    /// </summary>
+    /// 
+    public static class DateTimeExtentions
+    {
+        ///<summary>Gets the first week day following a date.</summary>
+        ///<param name="date">The date.</param>
+        ///<param name="dayOfWeek">The day of week to return.</param>
+        ///<returns>The first dayOfWeek day following date, or date if it is on dayOfWeek.</returns>
+        public static DateTime Next(this DateTime date, DayOfWeek dayOfWeek)
+        {
+            return date.AddDays((dayOfWeek < date.DayOfWeek ? 7 : 0) + dayOfWeek - date.DayOfWeek);
+        }
+
+        /// <summary>
+        /// Gets a DateTime representing the first day in the current month
+        /// </summary>
+        /// <param name="current">The current date</param>
+        /// <returns></returns>
+        public static DateTime First(this DateTime current)
+        {
+            DateTime first = current.AddDays(1 - current.Day);
+            return first;
+        }
+
+        /// <summary>
+        /// Gets a DateTime representing the first specified day in the current month
+        /// </summary>
+        /// <param name="current">The current day</param>
+        /// <param name="dayOfWeek">The current day of week</param>
+        /// <returns></returns>
+        public static DateTime First(this DateTime current, DayOfWeek dayOfWeek)
+        {
+            DateTime first = current.First();
+
+            if (first.DayOfWeek != dayOfWeek)
+            {
+                first = first.Next(dayOfWeek);
+            }
+
+            return first;
+        }
+
+
+        /// <summary>
+        /// Gets a DateTime representing the last day in the current month
+        /// </summary>
+        /// <param name="current">The current date</param>
+        /// <returns></returns>
+        public static DateTime Last(this DateTime current)
+        {
+            int daysInMonth = DateTime.DaysInMonth(current.Year, current.Month);
+
+            DateTime last = current.First().AddDays(daysInMonth - 1);
+            return last;
+        }
+
+        /// <summary>
+        /// Gets a DateTime representing the last specified day in the current month
+        /// </summary>
+        /// <param name="current">The current date</param>
+        /// <param name="dayOfWeek">The current day of week</param>
+        /// <returns></returns>
+        public static DateTime Last(this DateTime current, DayOfWeek dayOfWeek)
+        {
+            DateTime last = current.Last();
+
+            last = last.AddDays(Math.Abs(dayOfWeek - last.DayOfWeek) * -1);
+            return last;
+        }
+
+        /// <summary>
+        /// Gets a DateTime representing the spesified DayOfWeek in the nthWeek in the month of given DateTime
+        /// </summary>
+        /// <param name="date">The current date</param>
+        /// <param name="nthWeek">The week in the month you want</param>
+        /// <param name="dayOfWeek">The day of week you want</param>
+        /// <returns>DateTime</returns>
+        public static DateTime GetNthWeekofMonth(this DateTime current, int nthWeek, DayOfWeek dayOfWeek)
+        {
+            return current.Next(dayOfWeek).AddDays((nthWeek - 1) * 7);
+        }
+    }
+}
