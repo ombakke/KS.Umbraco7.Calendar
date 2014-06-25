@@ -1,4 +1,4 @@
-﻿angular.module("umbraco").controller("KS.CalendarController", function ($scope, assetsService) {
+﻿angular.module("umbraco").controller("KS.CalendarController", function ($scope, assetsService, KSCalendarResource) {
 
     assetsService.loadCss("/app_plugins/KS.Umbraco7.Calendar/css/bootstrap-datetimepicker.min.css");
     assetsService.load([
@@ -17,8 +17,8 @@
     });
 
 
-
-    var emptyModel = '{ recursive: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1" }';//using this as default data
+    //using this as default data
+    var emptyModel = '{ recursive: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1" }';
 
     if (!angular.isObject($scope.model.value)) {
         $scope.model.value = eval('(' + emptyModel + ')');
@@ -27,6 +27,9 @@
 
     $scope.data = $scope.model.value;
 
+    //Load language-fields from external files
+    KSCalendarResource.getSomething().then(function (data) { populateVars(data);});
+
 
     $scope.toggleDay = function (id) {
         if (typeof $scope.data.days == 'undefined') {
@@ -34,12 +37,10 @@
         }
 
         var i = $scope.data.days.indexOf(id);
-        //console.log("IndexOf " + id + " - " + i);
         if (i < 0) {
             $scope.data.days.push(id);
         }
         else {
-            //console.log("Heidu!");
             $scope.data.days.splice(i, 1);
         }
 
@@ -49,200 +50,174 @@
         $scope.data.monthYearOption = id;
     };
     
-    $scope.days = [
-        {
-            id: '1',
-            name: "Mandag"
-        },
-        {
-            id: '2',
-            name: "Tirsdag"
-        },
-        {
-            id: '3',
-            name: "Onsdag"
-        },
-        {
-            id: '4',
-            name: "Torsdag"
-        },
-        {
-            id: "5",
-            name: "Fredag"
-        },
-        {
-            id: "6",
-            name: "Lørdag"
-        },
-        {
-            id: "7",
-            name: "Søndag"
-        }
-    ];
 
-    $scope.weeks = [
-        {
-            id: '1',
-            name: 'eneste'
-        },
-        {
-            id: '2',
-            name: '2.'
-        },
-        {
-            id: '3',
-            name: '3.'
-        },
-        {
-            id: '4',
-            name: '4.'
-        },
-        {
-            id: '5',
-            name: '5.'
-        }
-    ];
+    function populateVars(lang) {
+        $scope.language = lang;
 
-    $scope.months = [
-        {
-            id: "1",
-            name: "Januar"
-        },
-        {
-            id: "2",
-            name: "Februar"
-        },
-        {
-            id: "3",
-            name: "Mars"
-        },
-        {
-            id: "4",
-            name: "April"
-        },
-        {
-            id: "5",
-            name: "Mai"
-        },
-        {
-            id: "6",
-            name: "Juni"
-        },
-        {
-            id: "7",
-            name: "Juli"
-        },
-        {
-            id: "8",
-            name: "August"
-        },
-        {
-            id: "9",
-            name: "September"
-        },
-        {
-            id: "10",
-            name: "Oktober"
-        },
-        {
-            id: "11",
-            name: "November"
-        },
-        {
-            id: "12",
-            name: "Desember"
-        }
-    ];
+        $scope.days = [
+            {
+                id: '1',
+                name: lang.monday
+            },
+            {
+                id: '2',
+                name: lang.tuesday
+            },
+            {
+                id: '3',
+                name: lang.wednesday
+            },
+            {
+                id: '4',
+                name: lang.thursday
+            },
+            {
+                id: "5",
+                name: lang.friday
+            },
+            {
+                id: "6",
+                name: lang.saturday
+            },
+            {
+                id: "7",
+                name: lang.sunday
+            }
+        ];
 
-    $scope.options = [
-        {
-            id: "1",
-            name: "Ingen"
-        },
-        {
-            id: "2",
-            name: "Daglig"
-        },
-        {
-            id: "3",
-            name: "Ukentlig"
-        },
-        {
-            id: "4",
-            name: "Månedlig"
-        },
-        {
-            id: "5",
-            name: "Årlig"
-        }
-    ];
+        $scope.weeks = [
+            {
+                id: '1',
+                name: lang.single
+            },
+            {
+                id: '2',
+                name: lang.second
+            },
+            {
+                id: '3',
+                name: lang.third
+            },
+            {
+                id: '4',
+                name: lang.fourth
+            },
+            {
+                id: '5',
+                name: lang.fifth
+            }
+        ];
 
-    $scope.intervals = [
-        {
-            id: '1',
-            name: 'Første'
-        },
-        {
-            id: '2',
-            name: 'Andre'
-        },
-        {
-            id: '3',
-            name: 'Tredje'
-        },
-        {
-            id: '4',
-            name: 'Fjerde'
-        },
-        {
-            id: '5',
-            name: 'Femte'
-        },
-        {
-            id: '6',
-            name: 'Siste'
-        }
-    ];
+        $scope.months = [
+            {
+                id: "1",
+                name: lang.january
+            },
+            {
+                id: "2",
+                name: lang.february
+            },
+            {
+                id: "3",
+                name: lang.march
+            },
+            {
+                id: "4",
+                name: lang.april
+            },
+            {
+                id: "5",
+                name: lang.may
+            },
+            {
+                id: "6",
+                name: lang.june
+            },
+            {
+                id: "7",
+                name: lang.july
+            },
+            {
+                id: "8",
+                name: lang.august
+            },
+            {
+                id: "9",
+                name: lang.september
+            },
+            {
+                id: "10",
+                name: lang.october
+            },
+            {
+                id: "11",
+                name: lang.november
+            },
+            {
+                id: "12",
+                name: lang.december
+            }
+        ];
 
-    $scope.weekDays = [
-        {
-            id: '1',
-            name: 'Mandag'
-        },
-        {
-            id: '2',
-            name: 'Tirsdag'
-        },
-        {
-            id: '3',
-            name: 'Onsdag'
-        },
-        {
-            id: '4',
-            name: 'Torsdag'
-        },
-        {
-            id: '5',
-            name: 'Fredag'
-        },
-        {
-            id: '6',
-            name: 'Lørdag'
-        },
-        {
-            id: '0',
-            name: 'Søndag'
-        }
-    ];
+        $scope.options = [
+            {
+                id: "1",
+                name: lang.none
+            },
+            {
+                id: "2",
+                name: lang.daily
+            },
+            {
+                id: "3",
+                name: lang.weekly
+            },
+            {
+                id: "4",
+                name: lang.monthly
+            },
+            {
+                id: "5",
+                name: lang.yearly
+            }
+        ];
 
-    $scope.monthYearOptions = [
-        {
-            id: '1',
-            name: 'Bruk startdato'
-        },
-        {
-            id: '2',
-            name: 'Spesifiser'
-        }
-    ];
+        $scope.intervals = [
+            {
+                id: '1',
+                name: lang.first
+            },
+            {
+                id: '2',
+                name: lang.second
+            },
+            {
+                id: '3',
+                name: lang.third
+            },
+            {
+                id: '4',
+                name: lang.fourth
+            },
+            {
+                id: '5',
+                name: lang.fifth
+            },
+            {
+                id: '6',
+                name: lang.last
+            }
+        ];
+        
+        $scope.monthYearOptions = [
+            {
+                id: '1',
+                name: lang.useStartDate
+            },
+            {
+                id: '2',
+                name: lang.specify
+            }
+        ];
+    }
 });

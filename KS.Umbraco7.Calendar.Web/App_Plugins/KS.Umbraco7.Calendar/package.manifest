@@ -1,7 +1,7 @@
 ﻿{
 	propertyEditors:[
 		{
-			name: "KS Kalender",
+			name: "KS Umbraco 7 Calendar",
 			alias: "KS.Umbraco7.Calendar",
 			editor:{
 				view: "~/app_plugins/KS.Umbraco7.Calendar/editor.html",
@@ -10,6 +10,7 @@
 		}
 	],
 	javascript: [
-		"~/app_plugins/KS.Umbraco7.Calendar/editor.controller.js"
+		"~/app_plugins/KS.Umbraco7.Calendar/editor.controller.js",
+		"~/app_plugins/KS.Umbraco7.Calendar/editor.resource.js"
 	]
 }

@@ -1,11 +1,6 @@
 ﻿<div ng-controller="KS.CalendarController">
-    <span style="display:none;">
-    {{model.value | json }}
-        </span>
-    <br />
-
     <div class="input-append date datepicker" id="StartDateWrapper" data-inputfield="dtStartDate">
-        <label for="dtStartDate">Startdato:</label><input type="text" data-format="yyyy-MM-dd hh:mm:ss" id="dtStartDate" ng-model="data.startDate" ng-required="true" />
+        <label for="dtStartDate">{{language.startDate}}:</label><input type="text" data-format="yyyy-MM-dd hh:mm:ss" id="dtStartDate" ng-model="data.startDate" ng-required="true" />
         <span class="add-on">
             <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
             </i>
@@ -13,7 +8,7 @@
     </div>
     <br />
     <div class="input-append date datepicker" id="EndDateWrapper" data-inputfield="dtEndDate">
-        <label for="dtEndDate">Sluttdato:</label><input type="text" data-format="yyyy-MM-dd hh:mm:ss" id="dtEndDate" ng-model="data.endDate" />
+        <label for="dtEndDate">{{language.endDate}}:</label><input type="text" data-format="yyyy-MM-dd hh:mm:ss" id="dtEndDate" ng-model="data.endDate" />
         <span class="add-on">
             <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
             </i>
@@ -21,7 +16,7 @@
     </div>
     <br />
     <div>
-        <label>Rekursiv</label>
+        <label>{{language.recursive}}</label>
         <select ng-model="data.recursive" ng-options="option.id as option.name for option in options"></select>
     </div>
     
@@ -33,9 +28,9 @@
 
 
     <div ng-if="data.recursive ==='3'">
-        Hver
+        {{language.every}}
             <select ng-model="data.weekInterval" ng-options="week.id as week.name for week in weeks"></select>
-        uke på:
+        {{language.weekOn}}:
     </div>
 
 
@@ -48,7 +43,7 @@
 
 
     <select ng-model="data.interval" ng-options="interval.id as interval.name for interval in intervals" ng-if="data.recursive === '5' || data.recursive =='4'" ng-disabled="data.monthYearOption === '1'"></select>
-    <select ng-model="data.weekDay" ng-options="weekDay.id as weekDay.name for weekDay in weekDays" ng-if="data.recursive === '5' || data.recursive =='4'" ng-disabled="data.monthYearOption === '1'"></select>
+    <select ng-model="data.weekDay" ng-options="day.id as day.name for day in days" ng-if="data.recursive === '5' || data.recursive =='4'" ng-disabled="data.monthYearOption === '1'"></select>
     <select ng-model="data.month" ng-options="month.id as month.name for month in months" ng-if="data.recursive === '5'" ng-disabled="data.monthYearOption === '1'"></select>
 
 
