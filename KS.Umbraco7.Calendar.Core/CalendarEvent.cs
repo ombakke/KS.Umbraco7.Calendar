@@ -5,7 +5,7 @@ namespace KS.Umbraco7.Calendar.Core
 {
     public class CalendarEvent
     {
-        public int recurring { get; set; } // 1 - not recurring, 2 - repeat daily, 3 - repeat weekly, 4 - repeat monthly, 5 - repeat yearly
+        public int recurrence { get; set; } // 1 - not recurring, 2 - repeat daily, 3 - repeat weekly, 4 - repeat monthly, 5 - repeat yearly
         public int weekInterval { get; set; } //If repeat weekly this tells you if its every week, every 2nd week, every 3rd week etc.
         public int monthYearOption { get; set; } //0  - Use startdate, 1 - Specify weekday etc. for event
         public int interval { get; set; } //interval of weekly events

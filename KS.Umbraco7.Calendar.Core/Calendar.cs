@@ -81,14 +81,14 @@ namespace KS.Umbraco7.Calendar.Core
                 if (node.HasValue(propertyType))
                 {
                     CalendarEvent e = Newtonsoft.Json.JsonConvert.DeserializeObject<CalendarEvent>(node.GetPropertyValue(propertyType).ToString());
-                    if (((startDate <= e.startDate || e.recurring > 1) && e.startDate <= endDate) && (string.IsNullOrEmpty(e.endDate.ToString()) || startDate <= e.endDate))
+                    if (((startDate <= e.startDate || e.recurrence > 1) && e.startDate <= endDate) && (string.IsNullOrEmpty(e.endDate.ToString()) || startDate <= e.endDate))
                     {
                         DateTime eEndDate = (e.endDate == null ? endDate : (e.endDate.Value < endDate ? e.endDate.Value : endDate));
                         e.content = node;
-                        switch (e.recurring)
+                        switch (e.recurrence)
                         {
                             case 1:
-                                //none recurring
+                                //none recurrence
                                 events.Add(e);
                                 break;
                             case 2:
@@ -101,7 +101,7 @@ namespace KS.Umbraco7.Calendar.Core
                                     if (e.days.Contains((int)d.DayOfWeek))
                                     {
                                         CalendarEvent ce = new CalendarEvent();
-                                        ce.recurring = e.recurring;
+                                        ce.recurrence = e.recurrence;
                                         ce.startDate = e.startDate.AddDays(d.Date.Subtract(e.startDate.Date).Days);
                                         ce.endDate = e.endDate;
                                         ce.content = e.content;
@@ -123,7 +123,7 @@ namespace KS.Umbraco7.Calendar.Core
                                         if (e.days.Contains((int)d.DayOfWeek))
                                         {
                                             CalendarEvent ce = new CalendarEvent();
-                                            ce.recurring = e.recurring;
+                                            ce.recurrence = e.recurrence;
                                             ce.startDate = e.startDate.AddDays(d.Date.Subtract(e.startDate.Date).Days);
                                             ce.endDate = e.endDate;
                                             ce.content = e.content;
@@ -141,7 +141,7 @@ namespace KS.Umbraco7.Calendar.Core
                                     for (DateTime d = startDate; d <= eEndDate; d = d.AddMonths(1))
                                     {
                                         CalendarEvent ce = new CalendarEvent();
-                                        ce.recurring = e.recurring;
+                                        ce.recurrence = e.recurrence;
                                         ce.startDate = e.startDate.AddDays(d.Date.Subtract(e.startDate.Date).Days);
                                         ce.endDate = e.endDate;
                                         ce.content = e.content;
@@ -164,7 +164,7 @@ namespace KS.Umbraco7.Calendar.Core
                                             if (startDate.Date <= ed.Date && d.Month == ed.Month)
                                             {
                                                 CalendarEvent ce = new CalendarEvent();
-                                                ce.recurring = e.recurring;
+                                                ce.recurrence = e.recurrence;
                                                 ce.startDate = e.startDate.AddDays(ed.Date.Subtract(e.startDate.Date).Days);
                                                 ce.endDate = e.endDate;
                                                 ce.content = e.content;
@@ -180,7 +180,7 @@ namespace KS.Umbraco7.Calendar.Core
                                             if (lwd <= eEndDate)
                                             {
                                                 CalendarEvent ce = new CalendarEvent();
-                                                ce.recurring = e.recurring;
+                                                ce.recurrence = e.recurrence;
                                                 ce.startDate = e.startDate.AddDays(lwd.Date.Subtract(e.startDate.Date).Days);
                                                 ce.endDate = e.endDate;
                                                 ce.content = e.content;
@@ -201,7 +201,7 @@ namespace KS.Umbraco7.Calendar.Core
                                     for (DateTime d = startDate; d <= eEndDate; d = d.AddYears(1))
                                     {
                                         CalendarEvent ce = new CalendarEvent();
-                                        ce.recurring = e.recurring;
+                                        ce.recurrence = e.recurrence;
                                         ce.startDate = e.startDate.AddDays(d.Date.Subtract(e.startDate.Date).Days);
                                         ce.endDate = e.endDate;
                                         ce.content = e.content;
@@ -223,7 +223,7 @@ namespace KS.Umbraco7.Calendar.Core
                                             if (startDate.Date <= ed.Date && d.Month == ed.Month)
                                             {
                                                 CalendarEvent ce = new CalendarEvent();
-                                                ce.recurring = e.recurring;
+                                                ce.recurrence = e.recurrence;
                                                 ce.startDate = e.startDate.AddDays(ed.Date.Subtract(e.startDate.Date).Days);
                                                 ce.endDate = e.endDate;
                                                 ce.content = e.content;
@@ -236,7 +236,7 @@ namespace KS.Umbraco7.Calendar.Core
                                             //last weekDay in month
                                             DateTime lwd = d.Last((DayOfWeek)e.weekDay);
                                             CalendarEvent ce = new CalendarEvent();
-                                            ce.recurring = e.recurring;
+                                            ce.recurrence = e.recurrence;
                                             ce.startDate = e.startDate.AddDays(lwd.Date.Subtract(e.startDate.Date).Days);
                                             ce.endDate = e.endDate;
                                             ce.content = e.content;
