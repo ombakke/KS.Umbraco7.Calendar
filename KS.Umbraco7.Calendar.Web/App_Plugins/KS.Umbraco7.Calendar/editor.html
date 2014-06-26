@@ -20,14 +20,14 @@
         <select ng-model="data.recurrence" ng-options="option.id as option.name for option in options"></select>
     </div>
     
-    <div ng-if="data.recursive === '5' || data.recursive =='4'">
+    <div ng-if="data.recurrence === '5' || data.recurrence =='4'">
         <label ng-repeat="  m in monthYearOptions">
             <input type="radio" name="rdMonthYearOption" ng-checked="data.monthYearOption === m.id" ng-click="selectMonthYearOption(m.id)" />{{m.name}}
         </label>
     </div>
 
 
-    <div ng-if="data.recursive ==='3'">
+    <div ng-if="data.recurrence ==='3'">
         {{language.every}}
             <select ng-model="data.weekInterval" ng-options="week.id as week.name for week in weeks"></select>
         {{language.weekOn}}:
@@ -35,16 +35,16 @@
 
 
 
-    <div ng-if="data.recursive === '3' || data.recursive === '2'">
+    <div ng-if="data.recurrence === '3' || data.recurrence === '2'">
         <label ng-repeat="day in days">
             <input type="checkbox" ng-checked="data.days.indexOf(day.id) >= 0" ng-click="toggleDay(day.id)" />{{day.name}}
         </label>
     </div>
 
 
-    <select ng-model="data.interval" ng-options="interval.id as interval.name for interval in intervals" ng-if="data.recursive === '5' || data.recursive =='4'" ng-disabled="data.monthYearOption === '1'"></select>
-    <select ng-model="data.weekDay" ng-options="day.id as day.name for day in days" ng-if="data.recursive === '5' || data.recursive =='4'" ng-disabled="data.monthYearOption === '1'"></select>
-    <select ng-model="data.month" ng-options="month.id as month.name for month in months" ng-if="data.recursive === '5'" ng-disabled="data.monthYearOption === '1'"></select>
+    <select ng-model="data.interval" ng-options="interval.id as interval.name for interval in intervals" ng-if="data.recurrence === '5' || data.recurrence =='4'" ng-disabled="data.monthYearOption === '1'"></select>
+    <select ng-model="data.weekDay" ng-options="day.id as day.name for day in days" ng-if="data.recurrence === '5' || data.recurrence =='4'" ng-disabled="data.monthYearOption === '1'"></select>
+    <select ng-model="data.month" ng-options="month.id as month.name for month in months" ng-if="data.recurrence === '5'" ng-disabled="data.monthYearOption === '1'"></select>
 
 
 </div>
