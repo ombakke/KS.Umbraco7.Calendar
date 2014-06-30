@@ -5,17 +5,23 @@
        "/app_plugins/KS.Umbraco7.Calendar/js/bootstrap-datetimepicker.min.js"
     ])
     .then(function () {
-        
-        $("#StartDateWrapper").datetimepicker()
-                .on("changeDate", function (ev) {
-                    $scope.data.startDate = $("#dtStartDate").val();
-                });
-        $("#EndDateWrapper").datetimepicker()
-                .on("changeDate", function (ev) {
-                    $scope.data.endDate = $("#dtEndDate").val();
-                });
-    });
+        $("#StartDateWrapper").datetimepicker();
+        $("#EndDateWrapper").datetimepicker();
+       
+        $("#StartDateWrapper").on('changeDate', function () {
+            $scope.data.startDate = $("#dtStartDate").val();
+        });
+        $("#EndDateWrapper").on('changeDate', function () {
+            $scope.data.endDate = $("#dtEndDate").val();
+        });
 
+        $("#StartDateWrapper").on("change", "input", function () {
+            $scope.data.startDate = $("#dtStartDate").val();
+        });
+        $("#EndDateWrapper").on("change", "input", function () {
+            $scope.data.endDate = $("#dtEndDate").val();
+        });
+    });   
 
     //using this as default data
     var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1" }';
@@ -28,8 +34,7 @@
     $scope.data = $scope.model.value;
 
     //Load language-fields from external files
-    KSCalendarResource.getSomething().then(function (data) { populateVars(data);});
-
+    KSCalendarResource.getLanguagefile().then(function (data) { populateVars(data); });
 
     $scope.toggleDay = function (id) {
         if (typeof $scope.data.days == 'undefined') {
@@ -43,7 +48,6 @@
         else {
             $scope.data.days.splice(i, 1);
         }
-
     };
 
     $scope.selectMonthYearOption = function (id) {
@@ -220,4 +224,26 @@
             }
         ];
     }
+
+
+
+}).directive('enddate', function () {
+    //this directive is used for handling the enddate validation
+    return {
+        require: 'ngModel',
+        link: function ($scope, elm, attrs, ctrl) {
+            //we hook into the $formatters pipeline to get a chance to validate the enddate
+            ctrl.$formatters.unshift(function (viewValue) {
+                if ($scope.data.endDate != "" && new Date($scope.data.endDate).getTime() < new Date($scope.data.startDate).getTime()) {
+                    $scope.data.endDate = $scope.data.startDate;
+                    $("#dtEndDate").val($scope.data.endDate);
+                    return $scope.data.startDate;
+                }
+                else {
+                    //ctrl.$setValidity('enddateError', true);
+                    return viewValue;
+                }
+            });
+        }
+    };
 });

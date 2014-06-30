@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Plugins\KS.Umbraco7.Calendar\css\style.css" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\editor.resource.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\de-de.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\da-dk.js" />

@@ -1,0 +1,63 @@
+﻿
+div.fullWidth {
+    width:100%;
+    margin-top:5px;
+}
+
+    div.fullWidth label {
+        width:150px;
+    }
+
+    div.fullWidth select.full {
+        width:248px;
+        margin-left:-4px;
+    }
+
+    div.fullWidth .selectLabel {
+        line-height:30px;
+        padding:0 10px;
+    }
+
+
+div.days {
+    margin-top:10px;
+}
+
+div.days label {
+}
+
+    div.days label input {
+        margin-right:10px;
+    }
+
+span.selectPreText {
+    
+}
+
+span.selectPostText {
+}
+
+div.fullWidth.top20 {
+    margin-top:20px;
+}
+
+div.divider {
+    margin: 25px 10px;
+    border-top:1px solid #dedede;
+    height:1px;
+    width:50%;
+}
+
+div.fullWidth.monthYearOption label {
+    display:block;
+
+}
+
+    div.fullWidth.monthYearOption label input {
+        margin-right:10px;
+    }
+
+div .monthYearDD {
+    margin-left:10px;
+    margin-top:5px;
+}

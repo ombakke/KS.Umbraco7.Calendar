@@ -1,7 +1,7 @@
 ﻿angular.module("umbraco.resources").factory("KSCalendarResource", function ($http, $q, userService) {
     var service = {};
     
-    service.getSomething = function () {
+    service.getLanguagefile = function () {
         var deferred = $q.defer();
         userService.getCurrentUser().then(function (user) {
             //loading language file based on logged in users selected language
