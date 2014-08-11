@@ -84,7 +84,7 @@
                 name: lang.saturday
             },
             {
-                id: "7",
+                id: "0",
                 name: lang.sunday
             }
         ];

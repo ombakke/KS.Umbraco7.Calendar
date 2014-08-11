@@ -75,8 +75,21 @@ namespace KS.Umbraco7.Calendar.Core
         {
             DateTime last = current.Last();
 
-            last = last.AddDays(Math.Abs(dayOfWeek - last.DayOfWeek) * -1);
-            return last;
+            if (last.DayOfWeek == dayOfWeek)
+            {
+                return last;
+            }
+            else if ((int)dayOfWeek == 0) {
+                return last.AddDays((int)last.DayOfWeek * -1);
+            }
+            else if (last.DayOfWeek < dayOfWeek)
+            {
+                return last.AddDays(Math.Abs((7 + last.DayOfWeek) - dayOfWeek) * -1);
+            }
+            else
+            { 
+                return last.AddDays(Math.Abs(dayOfWeek - last.DayOfWeek) * -1); 
+            }
         }
 
         /// <summary>
