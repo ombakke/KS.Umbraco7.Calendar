@@ -119,7 +119,7 @@ namespace KS.Umbraco7.Calendar.Core
                                 {
                                     for (DateTime w = e.startDate.Date; w <= eEndDate; w = w.AddDays(7 * e.weekInterval))
                                     {
-                                        DateTime wEndDate = eEndDate < w.AddDays(7) ? eEndDate : w.AddDays(7);
+                                        DateTime wEndDate = (eEndDate < w.AddDays(7) ? eEndDate : w.AddDays(6));
                                         //looping each day in the actual week and adding the event to the list on the correct day
                                         for (DateTime d = w; d <= wEndDate; d = d.AddDays(1))
                                         {
