@@ -58,6 +58,31 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="startDate">Start date for event list</param>
         ///<param name="endDate">End date for event list</param>
         ///<param name="propertyType">Alias of the property holding the Datatype KS.Umbraco7.Calendar</param>
+        ///<param name="documentType">Alias of the document type</param>
+        ///<param name="nodeId">Id of node to look for events in descendants</param>
+        ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
+        public static List<CalendarEvent> getEvents(DateTime startDate, DateTime endDate, string propertyType, string documentType, int nodeId)
+        {
+            List<CalendarEvent> events = new List<CalendarEvent>();dynamic node;
+            try
+            {
+                node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).Content(nodeId));
+            }
+            catch (Exception ex) {
+                node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).TypedContentAtRoot().First());
+            }
+            if (node != null)
+            {
+                var nodes = node.Descendants(documentType);
+                return getEventList(startDate, endDate, propertyType, nodes);
+            }
+            return null;
+        }
+
+        ///<summary>Get a list of calendar events</summary>
+        ///<param name="startDate">Start date for event list</param>
+        ///<param name="endDate">End date for event list</param>
+        ///<param name="propertyType">Alias of the property holding the Datatype KS.Umbraco7.Calendar</param>
         ///<param name="startNode">DynamicPublishedConent to look for events in</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
         public static List<CalendarEvent> getEvents(DateTime startDate, DateTime endDate, string propertyType, DynamicPublishedContent startNode)
@@ -65,6 +90,32 @@ namespace KS.Umbraco7.Calendar.Core
             List<CalendarEvent> events = new List<CalendarEvent>();
             var nodes = startNode.Descendants();
             return getEventList(startDate, endDate, propertyType, nodes);
+        }
+
+        ///<summary>Get a list of calendar events</summary>
+        ///<param name="startDate">Start date for event list</param>
+        ///<param name="endDate">End date for event list</param>
+        ///<param name="propertyType">Alias of the property holding the Datatype KS.Umbraco7.Calendar</param>
+        ///<param name="nodeId">Id of node to look for events in descendants</param>
+        ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
+        public static List<CalendarEvent> getEvents(DateTime startDate, DateTime endDate, string propertyType, int nodeId)
+        {
+            List<CalendarEvent> events = new List<CalendarEvent>();
+            dynamic node;
+            try
+            {
+                node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).Content(nodeId));
+            }
+            catch (Exception ex) {
+                node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).TypedContentAtRoot().First());
+            }
+            if (node != null)
+            {
+                //var node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).Content(nodeId));
+                var nodes = node.Descendants();
+                return getEventList(startDate, endDate, propertyType, nodes);
+            }
+            return null;
         }
 
         ///<summary>Get a list of calendar events</summary>
