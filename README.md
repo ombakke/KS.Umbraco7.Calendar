@@ -12,4 +12,6 @@ Getting started:
  - Add the data type to a document type
  - Create some content
  - Use the namespace KS.Umbraco7.Calendar.Core 
- - Get list of CalendarEvnts with Calendar.getEvents(DateTime startDate, DateTime endDate, string propertyType)
+ - Get list of CalendarEvents with Calendar.getEvents(DateTime startDate, DateTime endDate, string propertyType)
+
+More info can be found at: http://our.umbraco.org/projects/website-utilities/ksumbraco7calendar
