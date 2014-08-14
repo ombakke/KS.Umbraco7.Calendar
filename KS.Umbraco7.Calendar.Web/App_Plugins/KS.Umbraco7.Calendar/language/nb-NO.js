@@ -31,7 +31,7 @@
     "fourth": "Fjerde",
     "fifth": "Femte",
     "last": "Siste",
-    "single": "Wneste",
+    "single": "Eneste",
     "startDate": "Startdato",
     "endDate": "Sluttdato",
     "recurrence": "Gjentagelse",
