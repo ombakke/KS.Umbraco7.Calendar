@@ -132,7 +132,7 @@ namespace KS.Umbraco7.Calendar.Core
                 if (node.HasValue(propertyType))
                 {
                     CalendarEvent e = Newtonsoft.Json.JsonConvert.DeserializeObject<CalendarEvent>(node.GetPropertyValue(propertyType).ToString());
-                    if (((startDate <= e.startDate || e.recurrence > 1) && e.startDate <= endDate) && (string.IsNullOrEmpty(e.endDate.ToString()) || startDate <= e.endDate))
+                    if (((startDate <= e.startDate || e.recurrence > 1) && e.startDate <= endDate) && (string.IsNullOrEmpty(e.endDate.ToString()) || startDate <= e.endDate) && !(e.recurrence > 1 && string.IsNullOrEmpty(e.endDate.ToString())))
                     {
                         DateTime eEndDate = (e.endDate == null ? endDate : (e.endDate.Value < endDate ? e.endDate.Value : endDate));
                         e.content = node;
@@ -190,10 +190,25 @@ namespace KS.Umbraco7.Calendar.Core
                                 break;
                             case 4:
                                 //repeat monthly
+                                DateTime mStartDate;
+                                    if (startDate < e.startDate)
+                                    {
+                                        //bruk e.startdate
+                                        mStartDate = e.startDate;
+                                    }
+                                    else {
+                                        if (e.startDate.Day < startDate.Day)
+                                        {
+                                            mStartDate = startDate.AddMonths(1).AddDays(((startDate.Day - e.startDate.Day) * -1) + 1);
+                                        }
+                                        else {
+                                            mStartDate = startDate.AddDays(e.startDate.Day - startDate.Day);
+                                        }
+                                    }
                                 if (e.monthYearOption == 1)
                                 {
                                     //use startdate every month
-                                    for (DateTime d = startDate; d <= eEndDate; d = d.AddMonths(1))
+                                    for (DateTime d = mStartDate; d <= eEndDate; d = d.AddMonths(1))
                                     {
                                         CalendarEvent ce = new CalendarEvent();
                                         ce.recurrence = e.recurrence;
@@ -207,7 +222,10 @@ namespace KS.Umbraco7.Calendar.Core
                                 {
                                     //specify
                                     //looping every month from startdate to enddate
-                                    for (DateTime d = startDate.AddDays((startDate.Day - 1) * -1); d <= eEndDate; d = d.AddMonths(1))
+                                    //DateTime mStartDate = e.startDate < startDate ? startDate : e.startDate
+
+                                    //for (DateTime d = startDate.AddDays((startDate.Day - 1) * -1); d <= eEndDate; d = d.AddMonths(1))
+                                    for (DateTime d = mStartDate; d <= eEndDate; d = d.AddMonths(1))
                                     {
 
                                         if (e.interval < 6)
@@ -250,10 +268,28 @@ namespace KS.Umbraco7.Calendar.Core
                                 break;
                             case 5:
                                 //repeat yearly
+                                DateTime yStartDate;
+                                if (startDate < e.startDate)
+                                {
+                                    //bruk e.startdate
+                                    yStartDate = e.startDate;
+                                }
+                                else
+                                {
+                                    if (e.startDate.Day < startDate.Day)
+                                    {
+                                        yStartDate = startDate.AddMonths(1).AddDays(((startDate.Day - e.startDate.Day) * -1) + 1);
+                                    }
+                                    else
+                                    {
+                                        yStartDate = startDate.AddDays(e.startDate.Day - startDate.Day);
+                                    }
+                                }
                                 if (e.monthYearOption == 1)
                                 {
                                     //use startdate
-                                    for (DateTime d = startDate; d <= eEndDate; d = d.AddYears(1))
+
+                                    for (DateTime d = yStartDate; d <= eEndDate; d = d.AddYears(1))
                                     {
                                         CalendarEvent ce = new CalendarEvent();
                                         ce.recurrence = e.recurrence;
@@ -269,7 +305,7 @@ namespace KS.Umbraco7.Calendar.Core
                                 else
                                 {
                                     //specify
-                                    for (DateTime d = startDate.AddDays((startDate.Day - 1) * -1); d <= eEndDate; d = d.AddYears(1))
+                                    for (DateTime d = yStartDate.AddDays((startDate.Day - 1) * -1); d <= eEndDate; d = d.AddYears(1))
                                     {
                                         d = d.AddMonths((d.Month - 1) * -1).AddDays((d.Day - 1) * -1).AddMonths(e.month - 1);
 
