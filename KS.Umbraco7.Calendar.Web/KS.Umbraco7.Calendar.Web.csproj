@@ -68,6 +68,7 @@
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\ja-jp.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\ko-kr.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\nl-nl.js" />
+    <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\nn-NO.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\pl-pl.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\pt-br.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\ru-ru.js" />

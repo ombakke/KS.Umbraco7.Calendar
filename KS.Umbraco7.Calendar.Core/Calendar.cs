@@ -132,7 +132,7 @@ namespace KS.Umbraco7.Calendar.Core
                 if (node.HasValue(propertyType))
                 {
                     CalendarEvent e = Newtonsoft.Json.JsonConvert.DeserializeObject<CalendarEvent>(node.GetPropertyValue(propertyType).ToString());
-                    if (((startDate <= e.startDate || e.recurrence > 1) && e.startDate <= endDate) && (string.IsNullOrEmpty(e.endDate.ToString()) || startDate <= e.endDate) && !(e.recurrence > 1 && string.IsNullOrEmpty(e.endDate.ToString())))
+                    if (((startDate <= e.startDate || e.recurrence > 1 || (e.endDate.HasValue && e.endDate.Value <= endDate && e.startDate <= endDate)) && e.startDate <= endDate) && (string.IsNullOrEmpty(e.endDate.ToString()) || startDate <= e.endDate) && !(e.recurrence > 1 && string.IsNullOrEmpty(e.endDate.ToString())))
                     {
                         DateTime eEndDate = (e.endDate == null ? endDate : (e.endDate.Value < endDate ? e.endDate.Value : endDate));
                         e.content = node;
@@ -140,7 +140,38 @@ namespace KS.Umbraco7.Calendar.Core
                         {
                             case 1:
                                 //none recurrence
-                                events.Add(e);
+                                if (e.endDate.HasValue && e.startDate.Date < e.endDate.Value.Date)
+                                {
+                                    //event spanning several days
+                                    DateTime dSDate = startDate.Date <= e.startDate.Date ? e.startDate.Date : startDate.Date;
+                                    for (DateTime d = dSDate; d <= e.endDate.Value; d = d.AddDays(1))
+                                    {
+                                        CalendarEvent ce = new CalendarEvent();
+                                        if (e.startDate.Date < d.Date)
+                                        {
+                                            ce.startDate = d.Date;
+                                        }
+                                        else {
+                                            //TimeSpan ts = d.Date - e.startDate;
+                                            //ce.startDate = e.startDate.AddDays(ts.Days *-1);
+                                            ce.startDate = e.startDate;
+                                        }
+                                        if (d.Date < e.endDate.Value.Date)
+                                        {
+                                            ce.endDate = d.Date.AddDays(1).AddSeconds(-1);
+                                        }
+                                        else {
+                                            ce.endDate = e.endDate.Value;
+                                        }
+                                        ce.recurrence = e.recurrence;
+                                        ce.content = e.content;
+                                        events.Add(ce);
+                                    }
+                                }
+                                else
+                                {
+                                    events.Add(e);
+                                }
                                 break;
                             case 2:
                                 //repeat daily
