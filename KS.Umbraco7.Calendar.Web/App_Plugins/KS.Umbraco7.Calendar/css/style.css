@@ -48,16 +48,22 @@ div.divider {
     width:50%;
 }
 
-div.fullWidth.monthYearOption label {
+div.fullWidth.monthYearOption label,
+div.fullWidth.monthOption label {
     display:block;
 
 }
 
-    div.fullWidth.monthYearOption label input {
+    div.fullWidth.monthYearOption label input,
+    div.fullWidth.monthOption label input {
         margin-right:10px;
     }
 
 div .monthYearDD {
     margin-left:10px;
     margin-top:5px;
+}
+
+div.fullWidth.monthOption {
+    margin-top:10px;
 }

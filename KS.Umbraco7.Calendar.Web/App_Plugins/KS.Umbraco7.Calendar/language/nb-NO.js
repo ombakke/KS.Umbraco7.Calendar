@@ -36,5 +36,7 @@
     "endDate": "Sluttdato",
     "recurrence": "Gjentagelse",
     "every": "Hver",
-    "weekOn": "uke på"
+    "weekOn": "uke på",
+    "everyMonth" : "Hver måned",
+    "chooseMonth": "Velg måned(er)"
 }

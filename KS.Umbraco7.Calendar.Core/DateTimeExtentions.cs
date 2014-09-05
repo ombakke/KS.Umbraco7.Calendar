@@ -101,7 +101,7 @@ namespace KS.Umbraco7.Calendar.Core
         /// <returns>DateTime</returns>
         public static DateTime GetNthWeekofMonth(this DateTime current, int nthWeek, DayOfWeek dayOfWeek)
         {
-            return current.Next(dayOfWeek).AddDays((nthWeek - 1) * 7);
+            return current.AddDays((current.Day *-1)+1).Next(dayOfWeek).AddDays((nthWeek - 1) * 7);
         }
     }
 }

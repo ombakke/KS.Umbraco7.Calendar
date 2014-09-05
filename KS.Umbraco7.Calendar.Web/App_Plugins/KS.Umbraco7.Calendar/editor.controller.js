@@ -24,7 +24,7 @@
     });   
 
     //using this as default data
-    var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1" }';
+    var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1", monthOption: "1" }';
 
     if (!angular.isObject($scope.model.value)) {
         $scope.model.value = eval('(' + emptyModel + ')');
@@ -50,8 +50,26 @@
         }
     };
 
+    $scope.toggleMonth = function (id) {
+        if (typeof $scope.data.months == 'undefined') {
+            $scope.data.months = [];
+        }
+
+        var i = $scope.data.months.indexOf(id);
+        if (i < 0) {
+            $scope.data.months.push(id);
+        }
+        else {
+            $scope.data.months.splice(i, 1);
+        }
+    };
+
     $scope.selectMonthYearOption = function (id) {
         $scope.data.monthYearOption = id;
+    };
+
+    $scope.selectMonthOption = function (id) {
+        $scope.data.monthOption = id;
     };
     
 
@@ -221,6 +239,17 @@
             {
                 id: '2',
                 name: lang.specify
+            }
+        ];
+
+        $scope.monthOptions = [
+            {
+                id: '1',
+                name: lang.everyMonth
+            },
+            {
+                id: '2',
+                name: lang.chooseMonth
             }
         ];
     }

@@ -48,4 +48,16 @@
         <select class="monthYearDD" ng-model="data.month" ng-options="month.id as month.name for month in months" ng-if="data.recurrence === '5'" ng-disabled="data.monthYearOption === '1'"></select>
     </div>
 
+    <div ng-if="data.recurrence =='4'" class="fullWidth monthOption">
+        <label ng-repeat="mo in monthOptions">
+            <input type="radio" name="rdMonthOption" ng-checked="data.monthOption === mo.id" ng-click="selectMonthOption(mo.id)" />{{mo.name}}
+        </label>
+    </div>
+
+    <div ng-if="data.recurrence === '4' && data.monthOption === '2'" class="days">
+        <label ng-repeat="month in months">
+            <input type="checkbox" ng-checked="data.months.indexOf(month.id) >= 0" ng-click="toggleMonth(month.id)" />{{month.name}}
+        </label>
+    </div>
+
 </div>

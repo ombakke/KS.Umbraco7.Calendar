@@ -36,5 +36,7 @@
     "endDate": "End date",
     "recurrence": "Recurrence",
     "every": "Every",
-    "weekOn": "week on"
+    "weekOn": "week on",
+    "everyMonth" : "Every month",
+    "chooseMonth": "Choose month(s)"
 }
