@@ -1,7 +1,7 @@
-﻿<div ng-controller="KS.CalendarController">
+﻿<form  ng-controller="KS.CalendarController" name="calendarForm">
     <div class="fullWidth input-append date datepicker" id="StartDateWrapper" data-inputfield="dtStartDate">
         <label for="dtStartDate">{{language.startDate}}</label>
-        <input type="datetime" data-format="yyyy-MM-dd hh:mm:ss" id="dtStartDate" ng-model="data.startDate" ng-required="true" name="startdate"/>
+        <input type="datetime" data-format="yyyy-MM-dd hh:mm:00" id="dtStartDate" ng-model="data.startDate" ng-required="true" name="startdate"/>
         <span class="add-on">
             <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
             </i>
@@ -10,12 +10,15 @@
     <br />
     <div class="fullWidth input-append date datepicker" id="EndDateWrapper" data-inputfield="dtEndDate">
         <label for="dtEndDate">{{language.endDate}}</label>
-        <input type="datetime" data-format="yyyy-MM-dd hh:mm:ss" id="dtEndDate" ng-model="data.endDate" name="enddate" enddate/>
+        <input type="datetime" data-format="yyyy-MM-dd hh:mm:00" id="dtEndDate" ng-model="data.endDate" name="enddate" enddate" />
         <span class="add-on">
             <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
             </i>
         </span>
+        
     </div>
+    <span class="help-inline" val-msg-for="enddate" val-toggle-msg="enddateError">{{language.endDateGreaterThanStartDate}}</span>
+    <span class="help-inline" val-msg-for="enddate" val-toggle-msg="enddateRequired">{{language.endDateRequired}}</span>
     <br />
     <div class="fullWidth">
         <label>{{language.recurrence}}</label>
@@ -60,4 +63,4 @@
         </label>
     </div>
 
-</div>
+</form>

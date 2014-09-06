@@ -38,5 +38,7 @@
     "every": "Kvar",
     "weekOn": "veke på",
     "everyMonth" : "Kvar månad",
-    "chooseMonth": "Velg månad(er)"
+    "chooseMonth": "Velg månad(er)",
+    "endDateGreaterThanStartDate":"Sluttdato må vere seinare enn startdato",
+    "endDateRequired":"Sluttdato må fylles ut ved gjentakande hendelsar"
 }

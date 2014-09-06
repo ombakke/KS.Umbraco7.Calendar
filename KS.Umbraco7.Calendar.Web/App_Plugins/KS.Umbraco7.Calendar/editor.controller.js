@@ -7,7 +7,7 @@
     .then(function () {
         $("#StartDateWrapper").datetimepicker();
         $("#EndDateWrapper").datetimepicker();
-       
+
         $("#StartDateWrapper").on('changeDate', function () {
             $scope.data.startDate = $("#dtStartDate").val();
         });
@@ -15,13 +15,13 @@
             $scope.data.endDate = $("#dtEndDate").val();
         });
 
-        $("#StartDateWrapper").on("change", "input", function () {
+        $("#dtStartDate").on("change", function () {
             $scope.data.startDate = $("#dtStartDate").val();
         });
-        $("#EndDateWrapper").on("change", "input", function () {
+        $("#dtEndDate").on("change", function () {
             $scope.data.endDate = $("#dtEndDate").val();
         });
-    });   
+    });
 
     //using this as default data
     var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1", monthOption: "1" }';
@@ -29,7 +29,7 @@
     if (!angular.isObject($scope.model.value)) {
         $scope.model.value = eval('(' + emptyModel + ')');
     }
-    
+
 
     $scope.data = $scope.model.value;
 
@@ -71,7 +71,18 @@
     $scope.selectMonthOption = function (id) {
         $scope.data.monthOption = id;
     };
-    
+
+    $scope.$watch('data.recurrence', function () {
+        validateEndDate($scope);
+    });
+
+    $scope.$watch('data.endDate', function () {
+        validateEndDate($scope);
+    });
+
+    $scope.$watch('data.startDate', function () {
+        validateEndDate($scope);
+    });
 
     function populateVars(lang) {
         $scope.language = lang;
@@ -230,7 +241,7 @@
                 name: lang.last
             }
         ];
-        
+
         $scope.monthYearOptions = [
             {
                 id: '1',
@@ -256,23 +267,81 @@
 
 
 
-}).directive('enddate', function () {
-    //this directive is used for handling the enddate validation
-    return {
-        require: 'ngModel',
-        link: function ($scope, elm, attrs, ctrl) {
-            //we hook into the $formatters pipeline to get a chance to validate the enddate
-            ctrl.$formatters.unshift(function (viewValue) {
-                if ($scope.data.endDate != "" && new Date($scope.data.endDate).getTime() < new Date($scope.data.startDate).getTime()) {
-                    $scope.data.endDate = $scope.data.startDate;
-                    $("#dtEndDate").val($scope.data.endDate);
-                    return $scope.data.startDate;
-                }
-                else {
-                    //ctrl.$setValidity('enddateError', true);
-                    return viewValue;
-                }
-            });
-        }
-    };
+//}).directive('enddate', function () {
+//    //this directive is used for handling the enddate validation
+//    return {
+//        require: 'ngModel',
+//        link: function ($scope, elm, attrs, ctrl) {
+//            //we hook into the $formatters pipeline to get a chance to validate the enddate
+//            ctrl.$formatters.unshift(function (viewValue) {
+//                //checkEndDateAfterStartDate(viewValue, $scope, ctrl);
+//                if (($scope.data.endDate != "" && new Date($scope.data.endDate).getTime() < new Date($scope.data.startDate).getTime()) || (1 < $scope.data.recurrence && $scope.data.endDate == "") || new Date($scope.data.endDate) == NaN) {
+//                    ctrl.$setValidity('enddateError', false);
+//                    return viewValue;
+//                }
+//                else {
+//                    ctrl.$setValidity('enddateError', true);
+//                    return viewValue;
+//                }
+                
+//                //console.log(new Date($scope.data.endDate));
+//                //if ($scope.data.endDate != "" && new Date($scope.data.endDate).getTime() < new Date($scope.data.startDate).getTime()) {
+//                //    //$scope.data.endDate = $scope.data.startDate;
+//                //    //$("#dtEndDate").val($scope.data.endDate);
+//                //    //return $scope.data.startDate;
+//                //    ctrl.$setValidity('enddateError', false);
+//                //    ctrl.$setValidity('enddateRequired', true);
+//                //    return viewValue;
+//                //}
+//                //else if (1 < $scope.data.recurrence && $scope.data.endDate == "") {
+//                //    ctrl.$setValidity('enddateRequired', false);
+//                //    ctrl.$setValidity('enddateError', true);
+//                //    return viewValue;
+//                //}
+//                //else {
+//                //    ctrl.$setValidity('enddateError', true);
+//                //    ctrl.$setValidity('enddateRequired', true);
+//                //    return viewValue;
+//                //}
+//            });
+//        }
+//    };
 });
+//function checkEndDateAfterStartDate(viewValue, $scope, ctrl) {
+//    //console.log(ctrl);
+//    if (($scope.data.endDate != "" && new Date($scope.data.endDate).getTime() < new Date($scope.data.startDate).getTime()) || (1 < $scope.data.recurrence && $scope.data.endDate == "")){
+//        ctrl.$setValidity('enddateError', false);
+//        //console.log(viewValue);
+//    }
+//    else {
+//        ctrl.$setValidity('enddateError', true);
+//       // console.log(viewValue);
+//    }
+//}
+
+//function checkEndDateRequired(viewValue, $scope, ctrl) {
+//    if (1 < $scope.data.recurrence && $scope.data.endDate == "") {
+//        ctrl.$setValidity('enddateRequired', false);
+//        //console.log(viewValue);
+//    }
+//    else {
+//        ctrl.$setValidity('enddateRequired', true);
+//       // console.log(viewValue);
+//    }
+//}
+
+function validateEndDate($scope) {
+    if (($scope.data.endDate != "" && new Date($scope.data.endDate).getTime() < new Date($scope.data.startDate).getTime()) || (1 < $scope.data.recurrence && $scope.data.endDate == "") || ($scope.data.endDate != "" && isNaN(new Date($scope.data.endDate).getTime()))) {
+        $scope.calendarForm.enddate.$setValidity('enddateError', false);
+    }
+    else {
+        $scope.calendarForm.enddate.$setValidity('enddateError', true);
+    }
+
+    if (1 < $scope.data.recurrence && $scope.data.endDate == "") {
+        $scope.calendarForm.enddate.$setValidity('enddateRequired', false);
+    }
+    else {
+        $scope.calendarForm.enddate.$setValidity('enddateRequired', true);
+    }
+}

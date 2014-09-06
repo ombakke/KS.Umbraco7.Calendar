@@ -38,5 +38,7 @@
     "every": "Hver",
     "weekOn": "uge, på en",
     "everyMonth" : "Hver måned",
-    "chooseMonth": "Vælg mmåned(er)"
+    "chooseMonth": "Vælg mmåned(er)",
+    "endDateGreaterThanStartDate":"End date must be greater than start date",
+    "endDateRequired":"End date is required on recurring events"
 }
