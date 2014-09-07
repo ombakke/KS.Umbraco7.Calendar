@@ -267,71 +267,11 @@
 
 
 
-//}).directive('enddate', function () {
-//    //this directive is used for handling the enddate validation
-//    return {
-//        require: 'ngModel',
-//        link: function ($scope, elm, attrs, ctrl) {
-//            //we hook into the $formatters pipeline to get a chance to validate the enddate
-//            ctrl.$formatters.unshift(function (viewValue) {
-//                //checkEndDateAfterStartDate(viewValue, $scope, ctrl);
-//                if (($scope.data.endDate != "" && new Date($scope.data.endDate).getTime() < new Date($scope.data.startDate).getTime()) || (1 < $scope.data.recurrence && $scope.data.endDate == "") || new Date($scope.data.endDate) == NaN) {
-//                    ctrl.$setValidity('enddateError', false);
-//                    return viewValue;
-//                }
-//                else {
-//                    ctrl.$setValidity('enddateError', true);
-//                    return viewValue;
-//                }
-                
-//                //console.log(new Date($scope.data.endDate));
-//                //if ($scope.data.endDate != "" && new Date($scope.data.endDate).getTime() < new Date($scope.data.startDate).getTime()) {
-//                //    //$scope.data.endDate = $scope.data.startDate;
-//                //    //$("#dtEndDate").val($scope.data.endDate);
-//                //    //return $scope.data.startDate;
-//                //    ctrl.$setValidity('enddateError', false);
-//                //    ctrl.$setValidity('enddateRequired', true);
-//                //    return viewValue;
-//                //}
-//                //else if (1 < $scope.data.recurrence && $scope.data.endDate == "") {
-//                //    ctrl.$setValidity('enddateRequired', false);
-//                //    ctrl.$setValidity('enddateError', true);
-//                //    return viewValue;
-//                //}
-//                //else {
-//                //    ctrl.$setValidity('enddateError', true);
-//                //    ctrl.$setValidity('enddateRequired', true);
-//                //    return viewValue;
-//                //}
-//            });
-//        }
-//    };
 });
-//function checkEndDateAfterStartDate(viewValue, $scope, ctrl) {
-//    //console.log(ctrl);
-//    if (($scope.data.endDate != "" && new Date($scope.data.endDate).getTime() < new Date($scope.data.startDate).getTime()) || (1 < $scope.data.recurrence && $scope.data.endDate == "")){
-//        ctrl.$setValidity('enddateError', false);
-//        //console.log(viewValue);
-//    }
-//    else {
-//        ctrl.$setValidity('enddateError', true);
-//       // console.log(viewValue);
-//    }
-//}
-
-//function checkEndDateRequired(viewValue, $scope, ctrl) {
-//    if (1 < $scope.data.recurrence && $scope.data.endDate == "") {
-//        ctrl.$setValidity('enddateRequired', false);
-//        //console.log(viewValue);
-//    }
-//    else {
-//        ctrl.$setValidity('enddateRequired', true);
-//       // console.log(viewValue);
-//    }
-//}
+    
 
 function validateEndDate($scope) {
-    if (($scope.data.endDate != "" && new Date($scope.data.endDate).getTime() < new Date($scope.data.startDate).getTime()) || (1 < $scope.data.recurrence && $scope.data.endDate == "") || ($scope.data.endDate != "" && isNaN(new Date($scope.data.endDate).getTime()))) {
+    if (($scope.data.endDate != "" && convertDateTime($scope.data.endDate).getTime() < convertDateTime($scope.data.startDate).getTime()) || (1 < $scope.data.recurrence && $scope.data.endDate == "") || ($scope.data.endDate != "" && isNaN(convertDateTime($scope.data.endDate).getTime()))) {
         $scope.calendarForm.enddate.$setValidity('enddateError', false);
     }
     else {
@@ -344,4 +284,21 @@ function validateEndDate($scope) {
     else {
         $scope.calendarForm.enddate.$setValidity('enddateRequired', true);
     }
+}
+
+
+function convertDateTime(dt) {
+    var dateTime = dt.split(" ");
+
+    var date = dateTime[0].split("-");
+    var yyyy = date[0];
+    var mm = date[1] - 1;
+    var dd = date[2];
+
+    var time = dateTime[1].split(":");
+    var h = time[0];
+    var m = time[1];
+    var s = parseInt(time[2]); //get rid of that 00.0;
+
+    return new Date(yyyy, mm, dd, h, m, s);
 }
