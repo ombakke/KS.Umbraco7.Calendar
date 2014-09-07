@@ -13,7 +13,7 @@ namespace KS.Umbraco7.Calendar.Core
         public int weekDay { get; set; } //weekDay for specified monthly and yearly events
         public int month { get; set; } //month for specified monthly and yearly events
         public int?[] days { get; set; } //array of days 0-6 for daily events
-        public int?[] months { get; set; }//array of monts 1-12 for monthly eventss
+        public int?[] months { get; set; }//array of monts 1-12 for monthly events
         public DateTime startDate { get; set; } //start date of the event
         public DateTime? endDate { get; set; } //end date of the event
         public DynamicPublishedContent content { get; set; } //the node containing the event
