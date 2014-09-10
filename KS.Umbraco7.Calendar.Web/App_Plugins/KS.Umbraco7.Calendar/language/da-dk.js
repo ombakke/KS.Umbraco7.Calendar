@@ -40,5 +40,9 @@
     "everyMonth" : "Hver måned",
     "chooseMonth": "Vælg mmåned(er)",
     "endDateGreaterThanStartDate":"End date must be greater than start date",
-    "endDateRequired":"End date is required on recurring events"
+    "endDateRequired":"End date is required on recurring events",
+    "recurUntil": "Genta til",
+    "except": "Unntatt",
+    "add": "Legg til",
+    "remove": "Fjern"
 }

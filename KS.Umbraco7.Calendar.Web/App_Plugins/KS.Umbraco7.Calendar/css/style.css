@@ -67,3 +67,30 @@ div .monthYearDD {
 div.fullWidth.monthOption {
     margin-top:10px;
 }
+
+div#exceptedDays {
+}
+
+#exceptedDays .exceptDay {
+    padding: 5px 25px 0;
+    margin: 0;
+    
+}
+
+    #exceptedDays .exceptDay span.exDate {
+         margin-right:50px;
+        display:inline-block;
+        *display:block;
+        *zoom:1;
+    }
+
+    #exceptedDays .exceptDay span.exDateWrap {
+       display:block;
+       margin-left:150px;
+       width:313px;
+       text-align:right;
+    }
+
+    #exceptedDays .exceptDay .btn {
+        width:72px;
+    }

@@ -40,5 +40,9 @@
     "everyMonth" : "Every month",
     "chooseMonth": "Choose month(s)",
     "endDateGreaterThanStartDate":"End date must be greater than start date",
-    "endDateRequired":"End date is required on recurring events"
+    "endDateRequired":"End date is required on recurring events",
+    "recurUntil": "Recur until",
+    "except": "Except on",
+    "add": "Add",
+    "remove": "Remove"
 }

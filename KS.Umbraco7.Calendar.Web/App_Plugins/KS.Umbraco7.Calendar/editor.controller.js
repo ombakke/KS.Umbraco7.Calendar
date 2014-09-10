@@ -1,25 +1,42 @@
-﻿angular.module("umbraco").controller("KS.CalendarController", function ($scope, assetsService, KSCalendarResource) {
-
+﻿angular.module("umbraco").controller("KS.CalendarController", function ($scope, $parse, assetsService, KSCalendarResource) {
     assetsService.loadCss("/app_plugins/KS.Umbraco7.Calendar/css/bootstrap-datetimepicker.min.css");
     assetsService.load([
        "/app_plugins/KS.Umbraco7.Calendar/js/bootstrap-datetimepicker.min.js"
     ])
     .then(function () {
-        $("#StartDateWrapper").datetimepicker();
-        $("#EndDateWrapper").datetimepicker();
-
-        $("#StartDateWrapper").on('changeDate', function () {
-            $scope.data.startDate = $("#dtStartDate").val();
+        $("#StartDateWrapper").datetimepicker({
+            pickSeconds: false
         });
-        $("#EndDateWrapper").on('changeDate', function () {
-            $scope.data.endDate = $("#dtEndDate").val();
+        $("#EndDateWrapper").datetimepicker({
+            pickSeconds: false
         });
 
-        $("#dtStartDate").on("change", function () {
-            $scope.data.startDate = $("#dtStartDate").val();
+        $("#dateRecurUntilWrapper").datetimepicker({
+            pickTime: false
         });
-        $("#dtEndDate").on("change", function () {
-            $scope.data.endDate = $("#dtEndDate").val();
+
+        $("#dateExceptWrapper").datetimepicker({
+            pickTime: false
+        });
+        
+
+        $(".datepicker").on('changeDate', function () {
+            var $inp = $(this).find("input");
+            var mod = $parse($inp.attr("ng-model"));
+            if ($inp.val() != '') {
+                var date = convertPickerDateTime($(this).data('datetimepicker').getLocalDate(), $(this).data('datetimepicker').pickTime);
+                mod.assign($scope, date);
+                $scope.$apply();
+                if ($inp.val() != date) {
+                    $inp.val(date);
+                }
+            }
+            else {
+                mod.assign($scope, "");
+                $scope.$apply();
+            }
+           validateEndDate($scope);
+            
         });
     });
 
@@ -61,6 +78,23 @@
         }
         else {
             $scope.data.months.splice(i, 1);
+        }
+    };
+
+    $scope.addExceptDate = function(){
+        if (typeof $scope.data.exceptDates == 'undefined') {
+            $scope.data.exceptDates = [];
+        }
+        if($("#dateExcept").val() != "" && !isNaN(new Date($("#dateExcept").val()).getDate())){
+            $scope.data.exceptDates.push($("#dateExcept").val());
+            $("#dateExcept").val("");
+        }
+    };
+
+    $scope.removeExceptDate = function(date){
+        var i = $scope.data.exceptDates.indexOf(date);
+        if (i > -1) {
+            $scope.data.exceptDates.splice(i, 1);
         }
     };
 
@@ -271,19 +305,24 @@
     
 
 function validateEndDate($scope) {
-    if (($scope.data.endDate != "" && convertDateTime($scope.data.endDate).getTime() < convertDateTime($scope.data.startDate).getTime()) || (1 < $scope.data.recurrence && $scope.data.endDate == "") || ($scope.data.endDate != "" && isNaN(convertDateTime($scope.data.endDate).getTime()))) {
-        $scope.calendarForm.enddate.$setValidity('enddateError', false);
-    }
-    else {
-        $scope.calendarForm.enddate.$setValidity('enddateError', true);
-    }
-
-    if (1 < $scope.data.recurrence && $scope.data.endDate == "") {
-        $scope.calendarForm.enddate.$setValidity('enddateRequired', false);
-    }
-    else {
-        $scope.calendarForm.enddate.$setValidity('enddateRequired', true);
-    }
+    //if (1 < $scope.data.recurrence && ($scope.data.endDate == undefined || $scope.data.endDate == "")) {
+    //    $scope.calendarForm.enddate.$setValidity('enddateRequired', false);
+    //}
+    //else
+        if ($scope.data.endDate != "" && $scope.data.endDate != undefined) {
+            //if ((convertDateTime($scope.data.endDate).getTime() < convertDateTime($scope.data.startDate).getTime()) || (1 < $scope.data.recurrence) || (isNaN(convertDateTime($scope.data.endDate).getTime()))) {
+            if ((convertDateTime($scope.data.endDate).getTime() < convertDateTime($scope.data.startDate).getTime()) || (isNaN(convertDateTime($scope.data.endDate).getTime()))) {
+                $scope.calendarForm.enddate.$setValidity('enddateError', false);
+            }
+        }
+        else {
+            $scope.calendarForm.enddate.$setValidity('enddateError', true);
+        }
+    //    $scope.calendarForm.enddate.$setValidity('enddateRequired', true);
+    //}
+    //else {
+    //    $scope.calendarForm.enddate.$setValidity('enddateRequired', true);
+    //}
 }
 
 
@@ -301,4 +340,37 @@ function convertDateTime(dt) {
     var s = parseInt(time[2]); //get rid of that 00.0;
 
     return new Date(yyyy, mm, dd, h, m, s);
+}
+
+
+function convertPickerDateTime(fullDate, time) {
+    var date = new Date(fullDate);
+    var month = date.getMonth() + 1;
+    if (month < 10) {
+        month = "0" + month;
+    }
+    var day = date.getDate();
+    if (day < 10) {
+        day = "0" + day;
+    }
+    var hours = date.getHours();
+    if (hours < 10) {
+        hours = "0" + hours;
+    }
+    var min = date.getMinutes();
+    if (min < 10) {
+        min = "0" + min;
+    }
+    if (time) {
+        return date.getFullYear() + "-" +
+                month + "-" +
+                day + " " +
+                hours + ":" +
+                min + ":00";
+    }
+    else {
+        return date.getFullYear() + "-" +
+                month + "-" +
+                day;
+    }
 }

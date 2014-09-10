@@ -40,5 +40,9 @@
     "everyMonth" : "Hver måned",
     "chooseMonth": "Velg måned(er)",
     "endDateGreaterThanStartDate":"Sluttdato må være senere enn startdato",
-    "endDateRequired":"Sluttdato må fylles ut ved gjentagende hendelse"
+    "endDateRequired":"Sluttdato må fylles ut ved gjentagende hendelse",
+    "recurUntil": "Gjenta til",
+    "except": "Unntatt",
+    "add": "Legg til",
+    "remove": "Fjern"
 }
