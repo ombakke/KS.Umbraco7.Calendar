@@ -142,14 +142,20 @@ namespace KS.Umbraco7.Calendar.Core
                     if (e.exceptDates == null) {
                         e.exceptDates = new List<DateTime>();
                     }
-                    if ((startDate <= e.startDate || (e.recurrence > 1 && !(e.recurUntil.HasValue && e.recurUntil <= startDate)) && e.startDate <= endDate))
+                    if (e.days == null) { 
+                        e.days = new int?[0];
+                    }
+                    if (e.months == null) {
+                        e.months = new int?[0];
+                    }
+                    if ((startDate <= e.startDate || (e.recurrence > 1 && !(e.recurUntil.HasValue && e.recurUntil.Value <= startDate)) && e.startDate <= endDate))
                     {
                         int durationMinutes = 0;
                         if (e.endDate.HasValue) {
                             durationMinutes = (int)e.endDate.Value.Subtract(e.startDate).TotalMinutes;
                         }
 
-                        DateTime eEndDate = (e.recurUntil == null ? endDate : (e.recurUntil.Value < endDate ? e.recurUntil.Value.AddDays(1).AddSeconds(-1) : endDate));
+                        DateTime eEndDate = (!e.recurUntil.HasValue ? endDate : (e.recurUntil.Value < endDate ? e.recurUntil.Value.AddDays(1).AddSeconds(-1) : endDate));
                         e.content = node;
                         switch (e.recurrence)
                         {
