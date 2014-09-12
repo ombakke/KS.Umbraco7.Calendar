@@ -148,7 +148,8 @@ namespace KS.Umbraco7.Calendar.Core
                     if (e.months == null) {
                         e.months = new int?[0];
                     }
-                    if ((startDate <= e.startDate || (e.recurrence > 1 && !(e.recurUntil.HasValue && e.recurUntil.Value <= startDate)) && e.startDate <= endDate))
+
+                    if ((startDate <= e.startDate || (e.recurrence > 1 && (e.recurUntil.HasValue && startDate <= e.recurUntil.Value))) && e.startDate <= endDate)
                     {
                         int durationMinutes = 0;
                         if (e.endDate.HasValue) {
@@ -186,7 +187,10 @@ namespace KS.Umbraco7.Calendar.Core
                                         }
                                         ce.recurrence = e.recurrence;
                                         ce.content = e.content;
-                                        events.Add(ce);
+                                        if (ce.startDate <= endDate)
+                                        {
+                                            events.Add(ce);
+                                        }
                                     }
                                 }
                                 else
@@ -209,7 +213,7 @@ namespace KS.Umbraco7.Calendar.Core
                                         ce.endDate = (e.endDate.HasValue ? ce.startDate.AddMinutes(durationMinutes) : e.endDate);
                                         ce.content = e.content;
                                         //ce.Debug = "Enddate: " + eEndDate.ToString("dd.MM.yyyy HH:mm");
-                                        if (!e.exceptDates.Contains(ce.startDate.Date))
+                                        if (!e.exceptDates.Contains(ce.startDate.Date) && ce.startDate <= endDate)
                                         {
                                             events.Add(ce);
                                         }
@@ -237,7 +241,7 @@ namespace KS.Umbraco7.Calendar.Core
                                                 ce.endDate = (e.endDate.HasValue ? ce.startDate.AddMinutes(durationMinutes) : e.endDate);
                                                 ce.content = e.content;
                                                 //ce.Debug = "Her";
-                                                if (!e.exceptDates.Contains(ce.startDate.Date))
+                                                if (!e.exceptDates.Contains(ce.startDate.Date) && ce.startDate <= endDate)
                                                 {
                                                     events.Add(ce);
                                                 }
@@ -275,7 +279,7 @@ namespace KS.Umbraco7.Calendar.Core
                                             ce.startDate = e.startDate.AddDays(d.Date.Subtract(e.startDate.Date).Days);
                                             ce.endDate = (e.endDate.HasValue ? ce.startDate.AddMinutes(durationMinutes) : e.endDate);
                                             ce.content = e.content;
-                                            if (!e.exceptDates.Contains(ce.startDate.Date))
+                                            if (!e.exceptDates.Contains(ce.startDate.Date) && ce.startDate <= endDate)
                                             {
                                                 events.Add(ce);
                                             }
@@ -306,7 +310,7 @@ namespace KS.Umbraco7.Calendar.Core
                                                 ce.endDate = (e.endDate.HasValue ? ce.startDate.AddMinutes(durationMinutes) : e.endDate);
                                                 ce.content = e.content;
                                                 //ce.Debug = "d: " + d.ToString("dd.MM.yyyy hh:mm") + "  -  " + "ed.month: " + ed.Month + "  d.month: " + d.Month + "  ";
-                                                if (!e.exceptDates.Contains(ce.startDate.Date))
+                                                if (!e.exceptDates.Contains(ce.startDate.Date) && ce.startDate <= endDate)
                                                 {
                                                     events.Add(ce);
                                                 }
@@ -326,7 +330,7 @@ namespace KS.Umbraco7.Calendar.Core
                                                 ce.content = e.content;
                                                 //ce.Debug = "Siste " + (DayOfWeek)e.weekDay + " i måneden";
                                                 //ce.Debug = "d: " + d.ToString("dd.MM.yyyy hh:mm") + "  -  " + "ed.month: " + ed.Month + "  d.month: " + d.Month + "  ";
-                                                if (!e.exceptDates.Contains(ce.startDate.Date))
+                                                if (!e.exceptDates.Contains(ce.startDate.Date) && ce.startDate <= endDate)
                                                 {
                                                     events.Add(ce);
                                                 }
@@ -392,7 +396,7 @@ namespace KS.Umbraco7.Calendar.Core
                                                 ce.endDate = (e.endDate.HasValue ? ce.startDate.AddMinutes(durationMinutes) : e.endDate);
                                                 ce.content = e.content;
                                                 //ce.Debug = "d: " + d.ToString("dd.MM.yyyy hh:mm") + "  -  " + "ed.month: " + ed.Month + "  d.month: " + d.Month + "  ";
-                                                if (!e.exceptDates.Contains(ce.startDate.Date))
+                                                if (!e.exceptDates.Contains(ce.startDate.Date) && ce.startDate <= endDate)
                                                 {
                                                     events.Add(ce);
                                                 }

@@ -18,7 +18,6 @@
         $("#dateExceptWrapper").datetimepicker({
             pickTime: false
         });
-        
 
         $(".datepicker").on('changeDate', function () {
             var $inp = $(this).find("input");
@@ -35,21 +34,32 @@
                 mod.assign($scope, "");
                 $scope.$apply();
             }
-           validateEndDate($scope);
-            
+            validateEndDate($scope);
+            validateRecurUntil($scope);
+        });
+
+        $("#dtEndDate").on('change', function () {
+            validateEndDate($scope);
+
+        });
+        $("#dtStartDate").on('change', function () {
+            validateEndDate($scope);
+        });
+        $("#dateRecurUntil").change(function () {
+            validateRecurUntil($scope);
         });
     });
+    
 
     //using this as default data
-    var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1", monthOption: "1" }';
+    var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1", monthOption: "1", startDate: "", endDate: "" }';
 
     if (!angular.isObject($scope.model.value)) {
         $scope.model.value = eval('(' + emptyModel + ')');
     }
-
-
     $scope.data = $scope.model.value;
-
+    checkStartEndDate($scope);
+    
     //Load language-fields from external files
     KSCalendarResource.getLanguagefile().then(function (data) { populateVars(data); });
 
@@ -105,18 +115,6 @@
     $scope.selectMonthOption = function (id) {
         $scope.data.monthOption = id;
     };
-
-    $scope.$watch('data.recurrence', function () {
-        validateEndDate($scope);
-    });
-
-    $scope.$watch('data.endDate', function () {
-        validateEndDate($scope);
-    });
-
-    $scope.$watch('data.startDate', function () {
-        validateEndDate($scope);
-    });
 
     function populateVars(lang) {
         $scope.language = lang;
@@ -298,50 +296,107 @@
             }
         ];
     }
-
-
-
 });
     
 
 function validateEndDate($scope) {
-    //if (1 < $scope.data.recurrence && ($scope.data.endDate == undefined || $scope.data.endDate == "")) {
-    //    $scope.calendarForm.enddate.$setValidity('enddateRequired', false);
-    //}
-    //else
-        if ($scope.data.endDate != "" && $scope.data.endDate != undefined) {
-            //if ((convertDateTime($scope.data.endDate).getTime() < convertDateTime($scope.data.startDate).getTime()) || (1 < $scope.data.recurrence) || (isNaN(convertDateTime($scope.data.endDate).getTime()))) {
-            if ((convertDateTime($scope.data.endDate).getTime() < convertDateTime($scope.data.startDate).getTime()) || (isNaN(convertDateTime($scope.data.endDate).getTime()))) {
-                $scope.calendarForm.enddate.$setValidity('enddateError', false);
-            }
+    var startDate = convertDateTime($scope.data.startDate);
+    if (startDate == false) {
+        $("#dtStartDate").val('');
+    }
+    else if ($scope.data.endDate != "" && $scope.data.endDate != undefined) {        
+        var endDate = convertDateTime($scope.data.endDate);
+        if (endDate == false) {
+            $scope.data.endDate = convertPickerDateTime($("#EndDateWrapper").data('datetimepicker').getLocalDate(), $("#EndDateWrapper").data('datetimepicker').pickTime);
+            validateEndDate($scope);
         }
         else {
-            $scope.calendarForm.enddate.$setValidity('enddateError', true);
+            if (endDate.getTime() <= startDate.getTime()) {
+                $scope.calendarForm.enddate.$setValidity('enddateError', false);
+            }
+            else {
+                $scope.calendarForm.enddate.$setValidity('enddateError', true);
+            }
         }
-    //    $scope.calendarForm.enddate.$setValidity('enddateRequired', true);
-    //}
-    //else {
-    //    $scope.calendarForm.enddate.$setValidity('enddateRequired', true);
-    //}
+    }
+    else {
+        $scope.calendarForm.enddate.$setValidity('enddateError', true);
+    }
 }
 
+
+function checkStartEndDate($scope) {
+    if ($scope.data.startDate != undefined) {
+        if ($scope.data.startDate.length == 19) {
+            $scope.data.startDate = $scope.data.startDate.substring(0, 16);
+        }
+        $("#dtStartDate").val($scope.data.startDate);
+    }
+    if ($scope.data.endDate != undefined) {
+        if ($scope.data.endDate.length == 19) {
+            $scope.data.endDate = $scope.data.endDate.substring(0, 16);
+        }
+        $("#dtEndDate").val($scope.data.endDate);
+    }
+    if ($scope.data.recurUntil != undefined) {
+        if ($scope.data.recurUntil.length > 10) {
+            $scope.data.recurUntil = $scope.data.endDate.substring(0, 10);
+        }
+        $("#dateRecurUntil").val($scope.data.recurUntil);
+    }
+}
+
+function validateRecurUntil($scope) {
+    if ($scope.data.recurUntil != undefined && $scope.data.recurUntil != '') {
+        var recUntil = convertDate($scope.data.recurUntil);
+        if (recUntil == false) {
+            $scope.data.recurUntil = "";
+            $("#dateRecurUntil").val("");
+        }
+        else {
+            if (convertPickerDateTime(recUntil, false) != $scope.data.recurUntil) {
+                $scope.data.recurUntil = convertPickerDateTime(recUntil, false);
+            }
+        }
+    }
+}
 
 function convertDateTime(dt) {
-    var dateTime = dt.split(" ");
+    try{
+        var dateTime = dt.split(' ');
+        var date = dateTime[0].split('-');
+        var yyyy = date[0];
+        var mm = date[1] - 1;
+        var dd = date[2];
 
-    var date = dateTime[0].split("-");
-    var yyyy = date[0];
-    var mm = date[1] - 1;
-    var dd = date[2];
+        var time = dateTime[1].split(':');
+        var h = time[0];
+        var m = time[1];
+        //var s = parseInt(time[2]); //get rid of that 00.0;
 
-    var time = dateTime[1].split(":");
-    var h = time[0];
-    var m = time[1];
-    var s = parseInt(time[2]); //get rid of that 00.0;
-
-    return new Date(yyyy, mm, dd, h, m, s);
+        return new Date(yyyy, mm, dd, h, m);
+    }
+    catch(err){
+        return false;
+    }
 }
 
+function convertDate(d) {
+    try {
+        var date = d.split(' ')[0].split('-');
+        var yyyy = date[0];
+        var mm = date[1] - 1;
+        var dd = date[2];
+        if (isNaN(new Date(yyyy, mm, dd).getDate())) {
+            return false;
+        };
+        return new Date(yyyy, mm, dd);
+    }
+    catch (err) {
+        return false;
+    }
+
+}
 
 function convertPickerDateTime(fullDate, time) {
     var date = new Date(fullDate);
@@ -366,7 +421,7 @@ function convertPickerDateTime(fullDate, time) {
                 month + "-" +
                 day + " " +
                 hours + ":" +
-                min + ":00";
+                min;// + ":00";
     }
     else {
         return date.getFullYear() + "-" +

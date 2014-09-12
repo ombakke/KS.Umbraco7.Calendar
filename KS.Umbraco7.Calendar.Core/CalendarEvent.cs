@@ -20,6 +20,5 @@ namespace KS.Umbraco7.Calendar.Core
         public DateTime? endDate { get; set; } //end date of the event (endDate - startDate = duration)
         public DateTime? recurUntil { get; set; } //last occurance of recurring event
         public DynamicPublishedContent content { get; set; } //the node containing the event
-        public string Debug { get; set; } 
     }
 }
