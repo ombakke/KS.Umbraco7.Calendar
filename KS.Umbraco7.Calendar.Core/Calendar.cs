@@ -253,23 +253,27 @@ namespace KS.Umbraco7.Calendar.Core
                             case 4:
                                 //repeat monthly
                                 DateTime mStartDate;
-                                if (startDate < e.startDate)
-                                {
-                                    //bruk e.startdate
-                                    mStartDate = e.startDate;
-                                }
-                                else {
-                                    if (e.startDate.Day < startDate.Day)
-                                    {
-                                        mStartDate = startDate.AddMonths(1).AddDays(((startDate.Day - e.startDate.Day) * -1) + 1);
-                                    }
-                                    else {
-                                        mStartDate = startDate.AddDays(e.startDate.Day - startDate.Day);
-                                    }
-                                }
+                                
                                 if (e.monthYearOption == 1)
                                 {
                                     //use startdate every month
+                                    if (startDate < e.startDate)
+                                    {
+                                        //bruk e.startdate
+                                        mStartDate = e.startDate;
+                                    }
+                                    else
+                                    {
+                                        if (e.startDate.Day < startDate.Day)
+                                        {
+                                            mStartDate = startDate.AddMonths(1).AddDays(((startDate.Day - e.startDate.Day) * -1) + 1);
+                                        }
+                                        else
+                                        {
+                                            mStartDate = startDate.AddDays(e.startDate.Day - startDate.Day);
+                                        }
+                                    }
+                                    
                                     for (DateTime d = mStartDate; d <= eEndDate; d = d.AddMonths(1))
                                     {
                                         if (e.monthOption.Value != 2 || (e.monthOption.Value == 2 && e.months.Contains(d.Month)))
@@ -290,12 +294,10 @@ namespace KS.Umbraco7.Calendar.Core
                                 {
                                     //specify
                                     //looping every month from startdate to enddate
-                                    //DateTime mStartDate = e.startDate < startDate ? startDate : e.startDate
-
-                                    //for (DateTime d = startDate.AddDays((startDate.Day - 1) * -1); d <= eEndDate; d = d.AddMonths(1))
+                                    
+                                    mStartDate = startDate < e.startDate ? e.startDate : startDate;
                                     for (DateTime d = mStartDate; d <= eEndDate; d = d.AddMonths(1))
                                     {
-
                                         if (e.interval < 6)
                                         {
                                             //1st - 5th weekday this month
