@@ -1,4 +1,8 @@
 ﻿
+label{
+    cursor:default;
+}
+
 div.fullWidth {
     width:100%;
     margin-top:5px;
@@ -9,8 +13,7 @@ div.fullWidth {
     }
 
     div.fullWidth select.full {
-        width:248px;
-        margin-left:-4px;
+        width:250px;
     }
 
     div.fullWidth .selectLabel {

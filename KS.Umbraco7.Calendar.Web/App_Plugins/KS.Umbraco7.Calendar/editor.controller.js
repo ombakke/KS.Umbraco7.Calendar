@@ -1,28 +1,28 @@
 ﻿angular.module("umbraco").controller("KS.CalendarController", function ($scope, $parse, assetsService, KSCalendarResource) {
-    assetsService.loadCss("/app_plugins/KS.Umbraco7.Calendar/css/bootstrap-datetimepicker.min.css");
-    assetsService.load([
-       "/app_plugins/KS.Umbraco7.Calendar/js/bootstrap-datetimepicker.min.js"
-    ])
-    .then(function () {
-        $("#StartDateWrapper").datetimepicker({
-            pickSeconds: false
-        });
-        $("#EndDateWrapper").datetimepicker({
-            pickSeconds: false
-        });
+    $("#StartDateWrapper").datetimepicker({
+        pickSeconds: false,
+        format: 'YYYY-MM-DD HH:mm'
+    });
+    $("#EndDateWrapper").datetimepicker({
+        pickSeconds: false,
+        format: 'YYYY-MM-DD HH:mm'
+    });
 
-        $("#dateRecurUntilWrapper").datetimepicker({
-            pickTime: false
-        });
+    $("#dateRecurUntilWrapper").datetimepicker({
+        pickTime: false,
+        format: 'YYYY-MM-DD'
+    });
 
-        $("#dateExceptWrapper").datetimepicker({
-            pickTime: false
-        });
+    $("#dateExceptWrapper").datetimepicker({
+        pickTime: false,
+        format: 'YYYY-MM-DD'
+    });
 
-        $(".datepicker").on('changeDate', function () {
-            var $inp = $(this).find("input");
-            var mod = $parse($inp.attr("ng-model"));
-            if ($inp.val() != '') {
+    $(".datepicker").on('changeDate', function () {
+        var $inp = $(this).find("input");
+        var mod = $parse($inp.attr("ng-model"));
+        if ($inp.val() != '') {
+            try {
                 var date = convertPickerDateTime($(this).data('datetimepicker').getLocalDate(), $(this).data('datetimepicker').pickTime);
                 mod.assign($scope, date);
                 $scope.$apply();
@@ -30,24 +30,27 @@
                     $inp.val(date);
                 }
             }
-            else {
-                mod.assign($scope, "");
-                $scope.$apply();
+            catch (err) {
+
             }
-            validateEndDate($scope);
-            validateRecurUntil($scope);
-        });
+        }
+        else {
+            mod.assign($scope, "");
+            $scope.$apply();
+        }
+        validateEndDate($scope);
+        validateRecurUntil($scope);
+    });
 
-        $("#dtEndDate").on('change', function () {
-            validateEndDate($scope);
+    $("#dtEndDate").on('change', function () {
+        validateEndDate($scope);
 
-        });
-        $("#dtStartDate").on('change', function () {
-            validateEndDate($scope);
-        });
-        $("#dateRecurUntil").change(function () {
-            validateRecurUntil($scope);
-        });
+    });
+    $("#dtStartDate").on('change', function () {
+        validateEndDate($scope);
+    });
+    $("#dateRecurUntil").change(function () {
+        validateRecurUntil($scope);
     });
     
 

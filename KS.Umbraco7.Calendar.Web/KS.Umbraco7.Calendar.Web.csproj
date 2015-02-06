@@ -59,6 +59,7 @@
   <ItemGroup>
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\css\style.css" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\editor.resource.js" />
+    <Content Include="App_Plugins\KS.Umbraco7.Calendar\js\moment-with-locales.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\de-de.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\da-dk.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\es-es.js" />
