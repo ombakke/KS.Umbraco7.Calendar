@@ -34,7 +34,6 @@
         var $inp = $(this).find("input");
         var mod = $parse($inp.attr("ng-model"));
         if ($inp.val() != '') {
-            console.log($inp.val());
             mod.assign($scope, $inp.val());
             $scope.$apply();
         }
@@ -357,7 +356,6 @@ function validateRecurUntil($scope) {
 }
 
 function convertDateTime(dt) {
-    //console.log(dt);
     try {
         var dateTime = dt.split(' ');
         var date = dateTime[0].split('-');
