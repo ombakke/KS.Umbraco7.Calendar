@@ -1,11 +1,23 @@
 ﻿angular.module("umbraco").controller("KS.CalendarController", function ($scope, $parse, assetsService, KSCalendarResource) {
     $("#StartDateWrapper").datetimepicker({
         pickSeconds: false,
-        format: 'YYYY-MM-DD HH:mm'
+        format: 'YYYY-MM-DD HH:mm',
+        icons: {
+            time: "icon-time",
+            date: "icon-calendar",
+            up: "icon-chevron-up",
+            down: "icon-chevron-down"
+        }
     });
     $("#EndDateWrapper").datetimepicker({
         pickSeconds: false,
-        format: 'YYYY-MM-DD HH:mm'
+        format: 'YYYY-MM-DD HH:mm',
+        icons: {
+            time: "icon-time",
+            date: "icon-calendar",
+            up: "icon-chevron-up",
+            down: "icon-chevron-down"
+        }
     });
 
     $("#dateRecurUntilWrapper").datetimepicker({
@@ -18,21 +30,13 @@
         format: 'YYYY-MM-DD'
     });
 
-    $(".datepicker").on('changeDate', function () {
+    $(".datepicker").on('change.dp', function (a) {
         var $inp = $(this).find("input");
         var mod = $parse($inp.attr("ng-model"));
         if ($inp.val() != '') {
-            try {
-                var date = convertPickerDateTime($(this).data('datetimepicker').getLocalDate(), $(this).data('datetimepicker').pickTime);
-                mod.assign($scope, date);
-                $scope.$apply();
-                if ($inp.val() != date) {
-                    $inp.val(date);
-                }
-            }
-            catch (err) {
-
-            }
+            console.log($inp.val());
+            mod.assign($scope, $inp.val());
+            $scope.$apply();
         }
         else {
             mod.assign($scope, "");
@@ -42,18 +46,6 @@
         validateRecurUntil($scope);
     });
 
-    $("#dtEndDate").on('change', function () {
-        validateEndDate($scope);
-
-    });
-    $("#dtStartDate").on('change', function () {
-        validateEndDate($scope);
-    });
-    $("#dateRecurUntil").change(function () {
-        validateRecurUntil($scope);
-    });
-    
-
     //using this as default data
     var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1", monthOption: "1", startDate: "", endDate: "" }';
 
@@ -62,7 +54,7 @@
     }
     $scope.data = $scope.model.value;
     checkStartEndDate($scope);
-    
+
     //Load language-fields from external files
     KSCalendarResource.getLanguagefile().then(function (data) { populateVars(data); });
 
@@ -94,17 +86,17 @@
         }
     };
 
-    $scope.addExceptDate = function(){
+    $scope.addExceptDate = function () {
         if (typeof $scope.data.exceptDates == 'undefined') {
             $scope.data.exceptDates = [];
         }
-        if($("#dateExcept").val() != "" && !isNaN(new Date($("#dateExcept").val()).getDate())){
+        if ($("#dateExcept").val() != "" && !isNaN(new Date($("#dateExcept").val()).getDate())) {
             $scope.data.exceptDates.push($("#dateExcept").val());
             $("#dateExcept").val("");
         }
     };
 
-    $scope.removeExceptDate = function(date){
+    $scope.removeExceptDate = function (date) {
         var i = $scope.data.exceptDates.indexOf(date);
         if (i > -1) {
             $scope.data.exceptDates.splice(i, 1);
@@ -300,14 +292,14 @@
         ];
     }
 });
-    
+
 
 function validateEndDate($scope) {
     var startDate = convertDateTime($scope.data.startDate);
     if (startDate == false) {
         $("#dtStartDate").val('');
     }
-    else if ($scope.data.endDate != "" && $scope.data.endDate != undefined) {        
+    else if ($scope.data.endDate != "" && $scope.data.endDate != undefined) {
         var endDate = convertDateTime($scope.data.endDate);
         if (endDate == false) {
             $scope.data.endDate = convertPickerDateTime($("#EndDateWrapper").data('datetimepicker').getLocalDate(), $("#EndDateWrapper").data('datetimepicker').pickTime);
@@ -365,7 +357,8 @@ function validateRecurUntil($scope) {
 }
 
 function convertDateTime(dt) {
-    try{
+    //console.log(dt);
+    try {
         var dateTime = dt.split(' ');
         var date = dateTime[0].split('-');
         var yyyy = date[0];
@@ -379,7 +372,7 @@ function convertDateTime(dt) {
 
         return new Date(yyyy, mm, dd, h, m);
     }
-    catch(err){
+    catch (err) {
         return false;
     }
 }
