@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Calendar.cs" />
     <Compile Include="CalendarEvent.cs" />
+    <Compile Include="CalendarEventHandler.cs" />
     <Compile Include="DateTimeExtentions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
