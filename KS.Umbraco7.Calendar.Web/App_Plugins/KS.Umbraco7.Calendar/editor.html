@@ -1,7 +1,7 @@
 ﻿<form ng-controller="KS.CalendarController" name="calendarForm">
     <div class="fullWidth">
         <label>{{language.startDate}}</label>
-        <div class="input-append date datepicker datetime" id="StartDateWrapper" data-inputfield="dtStartDate" data-date="{{data.startDate}}">
+        <div class="input-append date datepicker datetime calendarEditor" id="StartDateWrapper" data-inputfield="dtStartDate" data-date="{{data.startDate}}">
             <input type="datetime" data-format="YYYY-MM-DD HH:mm" id="dtStartDate" ng-model="data.startDate" ng-required="true" name="startdate" />
             <span class="add-on">
                 <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -11,7 +11,7 @@
     </div>
     <div class="fullWidth">
         <label>{{language.endDate}}</label>
-        <div class="input-append date datepicker" id="EndDateWrapper" data-inputfield="dtEndDate" data-date="{{data.endDate}}">
+        <div class="input-append date datepicker calendarEditor" id="EndDateWrapper" data-inputfield="dtEndDate" data-date="{{data.endDate}}">
             <input type="datetime" data-format="YYYY-MM-DD HH:mm" id="dtEndDate" ng-model="data.endDate" name="enddate" />
             <span class="add-on">
                 <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -27,7 +27,7 @@
     </div>
     <div class="fullWidth">
         <label>{{language.recurUntil}}</label>
-        <div class="input-append date datepicker" ng-show="data.recurrence > '1'" data-inputfield="dateRecurUntil" id="dateRecurUntilWrapper" data-date="{{data.recurUntil}}">
+        <div class="input-append date datepicker calendarEditor" ng-show="data.recurrence > '1'" data-inputfield="dateRecurUntil" id="dateRecurUntilWrapper" data-date="{{data.recurUntil}}">
             <input type="text" ng-model="data.recurUntil" id="dateRecurUntil" data-format="YYYY-MM-DD" name="recurUntil" />
             <span class="add-on"><i class="icon-calendar" data-date-icon="icon-calendar"></i></span>
         </div>

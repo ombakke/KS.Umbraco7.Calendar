@@ -31,18 +31,20 @@
     });
 
     $(".datepicker").on('change.dp', function (a) {
-        var $inp = $(this).find("input");
-        var mod = $parse($inp.attr("ng-model"));
-        if ($inp.val() != '') {
-            mod.assign($scope, $inp.val());
-            $scope.$apply();
+        if ($(this).hasClass("calendarEditor")) {
+            var $inp = $(this).find("input");
+            var mod = $parse($inp.attr("ng-model"));
+            if ($inp.val() != '') {
+                mod.assign($scope, $inp.val());
+                $scope.$apply();
+            }
+            else {
+                mod.assign($scope, "");
+                $scope.$apply();
+            }
+            validateEndDate($scope);
+            validateRecurUntil($scope);
         }
-        else {
-            mod.assign($scope, "");
-            $scope.$apply();
-        }
-        validateEndDate($scope);
-        validateRecurUntil($scope);
     });
 
     //using this as default data

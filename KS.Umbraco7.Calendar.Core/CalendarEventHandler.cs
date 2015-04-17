@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Umbraco.Core;
+using Umbraco.Core.Logging;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 
@@ -23,53 +24,57 @@ namespace KS.Umbraco7.Calendar.Core
             {
 
                 /* calendar - KS.Umbraco7.Calendar */
-
-                if (node.PropertyTypes.Any(x => x.PropertyEditorAlias == "KS.Umbraco7.Calendar"))
-                {
-                    var pt = node.PropertyTypes.First(x => x.PropertyEditorAlias == "KS.Umbraco7.Calendar");
-
-                    var dataTypeService = ApplicationContext.Current.Services.DataTypeService;
-
-                    IDictionary<string, PreValue> pvs = dataTypeService.GetPreValuesCollectionByDataTypeId(pt.DataTypeDefinitionId).PreValuesAsDictionary;
-
-                    if (pvs.Any(x => x.Key == "startDateField"))
+                //try
+                //{
+                    if (node.PropertyTypes.Any(x => x.PropertyEditorAlias == "KS.Umbraco7.Calendar"))
                     {
+                        var pt = node.PropertyTypes.First(x => x.PropertyEditorAlias == "KS.Umbraco7.Calendar");
+                        LogHelper.Info(typeof(CalendarEventHandler), "PropertyTypeAlias Alias: " + pt.Alias + " PropertyEditorAlias: " + pt.PropertyEditorAlias);
+                        var dataTypeService = ApplicationContext.Current.Services.DataTypeService;
 
-                        if (node.HasProperty(pvs["startDateField"].Value))
+                        IDictionary<string, PreValue> pvs = dataTypeService.GetPreValuesCollectionByDataTypeId(pt.DataTypeDefinitionId).PreValuesAsDictionary;
+
+                        if (pvs.Any(x => x.Key == "startDateField"))
                         {
-                            string calJson = node.GetValue(pt.Alias).ToString();
-                            CalendarEvent cal = Newtonsoft.Json.JsonConvert.DeserializeObject<CalendarEvent>(calJson);
 
-                            var saveToPT = node.PropertyTypes.First(x => x.Alias == pvs["startDateField"].Value);
-                            var saveToDT = dataTypeService.GetDataTypeDefinitionById(saveToPT.DataTypeDefinitionId);
-
-
-
-                            if (saveToDT.DatabaseType == DataTypeDatabaseType.Nvarchar || saveToDT.DatabaseType == DataTypeDatabaseType.Ntext)
+                            if (node.HasProperty(pvs["startDateField"].Value))
                             {
-                                node.SetValue(pvs["startDateField"].Value, cal.startDate.ToString("yyyy-MM-dd HH:mm"));
-                                sender.SaveAndPublishWithStatus(node, 0, false);
+                                string calJson = node.GetValue(pt.Alias).ToString();
+                                CalendarEvent cal = Newtonsoft.Json.JsonConvert.DeserializeObject<CalendarEvent>(calJson);
+
+                                var saveToPT = node.PropertyTypes.First(x => x.Alias == pvs["startDateField"].Value);
+                                var saveToDT = dataTypeService.GetDataTypeDefinitionById(saveToPT.DataTypeDefinitionId);
+
+                                //if (saveToDT.DatabaseType == DataTypeDatabaseType.Nvarchar || saveToDT.DatabaseType == DataTypeDatabaseType.Ntext)
+                                //{
+                                //    node.SetValue(pvs["startDateField"].Value, cal.startDate.ToString("yyyy-MM-dd HH:mm"));
+                                //    sender.SaveAndPublishWithStatus(node, 0, false);
+                                //}
+                                //else
+                                if (saveToDT.DatabaseType == DataTypeDatabaseType.Date)
+                                {
+                                    node.SetValue(saveToPT.Alias, cal.startDate);
+                                    sender.SaveAndPublishWithStatus(node, 0, false);
+                                }
                             }
-                            else if (saveToDT.DatabaseType == DataTypeDatabaseType.Date)
-                            {
-                                node.SetValue(pvs["startDateField"].Value, cal.startDate);
-                                sender.SaveAndPublishWithStatus(node, 0, false);
-                            }
+                            //LogHelper.Info(typeof(MyEventHandler), "Saved something");
+
+                            //if (node.Parent().ContentType.Alias != "DateFolderTypeNameFromPreValue")
+                            //{
+                            //    //move and save
+                            //}
+                            //else
+                            //{
+                            //    //if mismatch between startdate and year/month-folder => move and save
+                            //}
+
                         }
-                        //LogHelper.Info(typeof(MyEventHandler), "Saved something");
-
-
-                        //if (node.Parent().ContentType.Alias != "DateFolderTypeNameFromPreValue")
-                        //{
-                        //    //move and save
-                        //}
-                        //else
-                        //{
-                        //    //if mismatch between startdate and year/month-folder => move and save
-                        //}
-
                     }
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                //    LogHelper.Info(typeof(CalendarEventHandler), ex.ToString());
+                //}
             }
         }
     }

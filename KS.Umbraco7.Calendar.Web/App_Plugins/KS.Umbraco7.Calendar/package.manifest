@@ -11,7 +11,7 @@
 				fields: [
 					{
 						label: "Startdatefield",
-						description: "Copy startdate to this field on save",
+						description: "Copy startdate to this field on save (Has to be a date-field)",
 						key: "startDateField",
 						view: "textstring"
 					}
@@ -22,7 +22,7 @@
 	javascript: [
 		"~/app_plugins/KS.Umbraco7.Calendar/js/moment-with-locales.js",
 		"~/app_plugins/KS.Umbraco7.Calendar/js/bootstrap-datetimepicker.min.js",
-		"~/app_plugins/KS.Umbraco7.Calendar/editor.controller.js?0173",
+		"~/app_plugins/KS.Umbraco7.Calendar/editor.controller.js?0174",
 		"~/app_plugins/KS.Umbraco7.Calendar/editor.resource.js?0"
 	],
 	css: [
