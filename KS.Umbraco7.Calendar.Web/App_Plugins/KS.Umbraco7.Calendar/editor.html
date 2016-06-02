@@ -25,9 +25,9 @@
         <label>{{language.recurrence}}</label>
         <select class="full" ng-model="data.recurrence" ng-options="option.id as option.name for option in options"></select>
     </div>
-    <div class="fullWidth">
+    <div class="fullWidth" ng-show="data.recurrence > '1'">
         <label>{{language.recurUntil}}</label>
-        <div class="input-append date datepicker calendarEditor" ng-show="data.recurrence > '1'" data-inputfield="dateRecurUntil" id="dateRecurUntilWrapper" data-date="{{data.recurUntil}}">
+        <div class="input-append date datepicker calendarEditor" data-inputfield="dateRecurUntil" id="dateRecurUntilWrapper" data-date="{{data.recurUntil}}">
             <input type="text" ng-model="data.recurUntil" id="dateRecurUntil" data-format="YYYY-MM-DD" name="recurUntil" />
             <span class="add-on"><i class="icon-calendar" data-date-icon="icon-calendar"></i></span>
         </div>
@@ -73,9 +73,9 @@
 
     <div class="divider" ng-if="data.recurrence > '1'"></div>
 
-    <div class="fullWidth">
+    <div class="fullWidth" ng-show="data.recurrence > '1'">
         <label>{{language.except}}</label>
-        <div class="input-append date" ng-show="data.recurrence > '1'" data-inputfield="dateExcept" id="dateExceptWrapper">
+        <div class="input-append date" data-inputfield="dateExcept" id="dateExceptWrapper">
             <input type="text" id="dateExcept" data-format="YYYY-MM-DD" name="exceptDate" />
             <span class="add-on"><i class="icon-calendar" data-date-icon="icon-calendar"></i></span>
             <button type="button" ng-click="addExceptDate()" class="btn">{{language.add}}</button>

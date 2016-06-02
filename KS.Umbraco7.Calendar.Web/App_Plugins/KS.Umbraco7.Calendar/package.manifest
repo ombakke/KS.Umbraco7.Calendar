@@ -4,7 +4,7 @@
 			name: "KS Umbraco 7 Calendar",
 			alias: "KS.Umbraco7.Calendar",
 			editor:{
-				view: "~/app_plugins/KS.Umbraco7.Calendar/editor.html",
+				view: "~/app_plugins/KS.Umbraco7.Calendar/editor.html?0174",
 				valueType: "JSON"
 			},
 			prevalues: {
