@@ -24,17 +24,17 @@ namespace KS.Umbraco7.Calendar.Core
             {
 
                 /* calendar - KS.Umbraco7.Calendar */
-                //try
-                //{
+                try
+                {
                     if (node.PropertyTypes.Any(x => x.PropertyEditorAlias == "KS.Umbraco7.Calendar"))
                     {
                         var pt = node.PropertyTypes.First(x => x.PropertyEditorAlias == "KS.Umbraco7.Calendar");
-                        LogHelper.Info(typeof(CalendarEventHandler), "PropertyTypeAlias Alias: " + pt.Alias + " PropertyEditorAlias: " + pt.PropertyEditorAlias);
+                        //LogHelper.Info(typeof(CalendarEventHandler), "PropertyTypeAlias Alias: " + pt.Alias + " PropertyEditorAlias: " + pt.PropertyEditorAlias);
                         var dataTypeService = ApplicationContext.Current.Services.DataTypeService;
 
                         IDictionary<string, PreValue> pvs = dataTypeService.GetPreValuesCollectionByDataTypeId(pt.DataTypeDefinitionId).PreValuesAsDictionary;
 
-                        if (pvs.Any(x => x.Key == "startDateField"))
+                        if (pvs.Any(x => x.Key == "startDateField" && x.Value.Value != null))
                         {
 
                             if (node.HasProperty(pvs["startDateField"].Value))
@@ -54,7 +54,7 @@ namespace KS.Umbraco7.Calendar.Core
                                 if (saveToDT.DatabaseType == DataTypeDatabaseType.Date)
                                 {
                                     node.SetValue(saveToPT.Alias, cal.startDate);
-                                    sender.SaveAndPublishWithStatus(node, 0, false);
+                                    sender.Save(node, 0, true);
                                 }
                             }
                             //LogHelper.Info(typeof(MyEventHandler), "Saved something");
@@ -70,11 +70,11 @@ namespace KS.Umbraco7.Calendar.Core
 
                         }
                     }
-                //}
-                //catch (Exception ex)
-                //{
-                //    LogHelper.Info(typeof(CalendarEventHandler), ex.ToString());
-                //}
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Info(typeof(CalendarEventHandler), ex.ToString());
+                }
             }
         }
     }

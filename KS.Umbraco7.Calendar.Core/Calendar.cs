@@ -124,7 +124,7 @@ namespace KS.Umbraco7.Calendar.Core
                 var nodes = node.Descendants(documentType);
                 return getEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
             }
-            return null;
+            return new List<CalendarEvent>();
         }
 
         ///<summary>Get a list of calendar events</summary>
