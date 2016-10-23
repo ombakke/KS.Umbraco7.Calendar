@@ -1,4 +1,5 @@
-﻿angular.module("umbraco").controller("KS.CalendarController", function ($scope, $parse, assetsService, KSCalendarResource) {
+﻿var _debug = false;
+angular.module("umbraco").controller("KS.CalendarController", function ($scope, $parse, assetsService, KSCalendarResource) {
     $("#StartDateWrapper").datetimepicker({
         pickSeconds: false,
         format: 'YYYY-MM-DD HH:mm',
@@ -423,5 +424,10 @@ function convertPickerDateTime(fullDate, time) {
         return date.getFullYear() + "-" +
                 month + "-" +
                 day;
+    }
+}
+function log(msg) {
+    if (_debug) {
+        console.log(msg);
     }
 }

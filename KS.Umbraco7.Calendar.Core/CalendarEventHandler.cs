@@ -54,7 +54,7 @@ namespace KS.Umbraco7.Calendar.Core
                                 if (saveToDT.DatabaseType == DataTypeDatabaseType.Date)
                                 {
                                     node.SetValue(saveToPT.Alias, cal.startDate);
-                                    sender.Save(node, 0, true);
+                                    sender.Save(node, 0, false);
                                 }
                             }
                             //LogHelper.Info(typeof(MyEventHandler), "Saved something");
