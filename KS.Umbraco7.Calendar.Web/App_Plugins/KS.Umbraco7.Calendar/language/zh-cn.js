@@ -17,7 +17,7 @@
     "september": "September",
     "october": "October",
     "november": "November",
-    "december": "Decsember",
+    "december": "December",
     "useStartDate": "Use start date",
     "specify": "Specify",
     "none": "None",

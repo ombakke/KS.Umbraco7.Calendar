@@ -49,10 +49,10 @@ angular.module("umbraco").controller("KS.CalendarController", function ($scope, 
     });
 
     //using this as default data
-    var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1", monthOption: "1", startDate: "", endDate: "" }';
+    var emptyModel = { recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1", monthOption: "1", startDate: "", endDate: "", days: [], months: [], exceptDates: [] };
 
     if (!angular.isObject($scope.model.value)) {
-        $scope.model.value = eval('(' + emptyModel + ')');
+        $scope.model.value = emptyModel;
     }
     $scope.data = $scope.model.value;
     checkStartEndDate($scope);
@@ -61,10 +61,9 @@ angular.module("umbraco").controller("KS.CalendarController", function ($scope, 
     KSCalendarResource.getLanguagefile().then(function (data) { populateVars(data); });
 
     $scope.toggleDay = function (id) {
-        if (typeof $scope.data.days == 'undefined') {
+        if (typeof $scope.data.days == 'undefined' || $scope.data.days === undefined || $scope.data.days == null) {
             $scope.data.days = [];
         }
-
         var i = $scope.data.days.indexOf(id);
         if (i < 0) {
             $scope.data.days.push(id);
@@ -74,11 +73,10 @@ angular.module("umbraco").controller("KS.CalendarController", function ($scope, 
         }
     };
 
-    $scope.toggleMonth = function (id) {
-        if (typeof $scope.data.months == 'undefined') {
+    $scope.toggleMonth = function (id) {       
+        if (typeof $scope.data.months == 'undefined' || $scope.data.months === undefined || $scope.data.months == null) {
             $scope.data.months = [];
         }
-
         var i = $scope.data.months.indexOf(id);
         if (i < 0) {
             $scope.data.months.push(id);
@@ -89,7 +87,7 @@ angular.module("umbraco").controller("KS.CalendarController", function ($scope, 
     };
 
     $scope.addExceptDate = function () {
-        if (typeof $scope.data.exceptDates == 'undefined') {
+        if (typeof $scope.data.exceptDates == 'undefined' || $scope.data.exceptDates === undefined || $scope.data.exceptDates == null) {
             $scope.data.exceptDates = [];
         }
         if ($("#dateExcept").val() != "" && !isNaN(new Date($("#dateExcept").val()).getDate())) {

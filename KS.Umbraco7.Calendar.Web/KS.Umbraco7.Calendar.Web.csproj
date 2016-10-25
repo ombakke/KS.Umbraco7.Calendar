@@ -91,6 +91,7 @@
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\editor.controller.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\editor.html" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Readme.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
