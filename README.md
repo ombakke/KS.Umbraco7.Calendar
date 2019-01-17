@@ -16,7 +16,7 @@ Getting started:
 
 More info can be found at: http://our.umbraco.org/projects/website-utilities/ksumbraco7calendar
 
-#Change log
+# Change log
 
 
 ##Version 0.1.1
