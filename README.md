@@ -19,7 +19,7 @@ More info can be found at: http://our.umbraco.org/projects/website-utilities/ksu
 ## Change log
 
 
-##Version 0.1.1
+### Version 0.1.1
 
 Added danish language-file (Thanks to Chriztian Steinmeier)
 Bugfix in editor.html (selcting recurrence didn't show options)
