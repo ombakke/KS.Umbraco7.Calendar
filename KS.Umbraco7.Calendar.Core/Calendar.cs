@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Umbraco.Core.Logging;
+using Umbraco.Core.Models;
 using Umbraco.Web;
 using Umbraco.Web.Models;
 
@@ -134,7 +135,7 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="startNode">DynamicPublishedConent to look for events in</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
-        public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, DynamicPublishedContent startNode, bool splitNoneRecurring = true)
+        public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, IPublishedContent startNode, bool splitNoneRecurring = true)
         {
             var nodes = startNode.Descendants();
             return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
@@ -173,7 +174,7 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="nodes">DynamicPublishedContentlist holding the nodes where we will be looking for events</param>
         ///
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
-        private static List<CalendarEvent> GetEventList(DateTime startDate, DateTime endDate, string propertyType, DynamicPublishedContentList nodes, bool splitNoneRecurring = true)
+        private static List<CalendarEvent> GetEventList(DateTime startDate, DateTime endDate, string propertyType, IEnumerable<IPublishedContent> nodes, bool splitNoneRecurring = true)
         {
             List<CalendarEvent> events = new List<CalendarEvent>();
             foreach (var node in nodes)
