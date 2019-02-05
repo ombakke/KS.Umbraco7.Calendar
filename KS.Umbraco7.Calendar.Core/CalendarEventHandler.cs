@@ -55,17 +55,6 @@ namespace KS.Umbraco7.Calendar.Core
                                     sender.Save(node, 0, false);
                                 }
                             }
-                            //LogHelper.Info(typeof(MyEventHandler), "Saved something");
-
-                            //if (node.Parent().ContentType.Alias != "DateFolderTypeNameFromPreValue")
-                            //{
-                            //    //move and save
-                            //}
-                            //else
-                            //{
-                            //    //if mismatch between startdate and year/month-folder => move and save
-                            //}
-
                         }
                     }
                 }
