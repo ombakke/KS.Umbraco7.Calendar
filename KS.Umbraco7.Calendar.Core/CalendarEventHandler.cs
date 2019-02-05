@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Umbraco.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Models;
@@ -18,7 +16,7 @@ namespace KS.Umbraco7.Calendar.Core
             ContentService.Saving += ContentService_Saving;
         }
 
-        void ContentService_Saving(IContentService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IContent> e)
+        void ContentService_Saving(IContentService sender, Umbraco.Core.Events.SaveEventArgs<IContent> e)
         {
             foreach (var node in e.SavedEntities)
             {
@@ -53,7 +51,7 @@ namespace KS.Umbraco7.Calendar.Core
                                 //else
                                 if (saveToDT.DatabaseType == DataTypeDatabaseType.Date)
                                 {
-                                    node.SetValue(saveToPT.Alias, cal.startDate);
+                                    node.SetValue(saveToPT.Alias, cal.StartDate);
                                     sender.Save(node, 0, false);
                                 }
                             }
