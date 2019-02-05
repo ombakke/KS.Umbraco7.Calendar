@@ -26,9 +26,14 @@ namespace KS.Umbraco7.Calendar.Core
             List<CalendarEvent> events = new List<CalendarEvent>();
             try
             {
-                var node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).Content(nodeId));
-                DynamicPublishedContentList nodes = new DynamicPublishedContentList();
-                nodes.Add(node);
+                var helper = new UmbracoHelper(UmbracoContext.Current);
+                var node = helper.TypedContent(nodeId);
+
+                List<IPublishedContent> nodes = new List<IPublishedContent>
+                {
+                    node
+                };
+
                 return GetEventList(date.Date, date.Date.AddDays(1).AddMilliseconds(-1),propertyType, nodes, splitNoneRecurring);
             }
             catch (Exception ex) {
@@ -49,9 +54,14 @@ namespace KS.Umbraco7.Calendar.Core
             List<CalendarEvent> events = new List<CalendarEvent>();
             try
             {
-                var node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).Content(nodeId));
-                DynamicPublishedContentList nodes = new DynamicPublishedContentList();
-                nodes.Add(node);
+                var helper = new UmbracoHelper(UmbracoContext.Current);
+                var node = helper.TypedContent(nodeId);
+
+                List<IPublishedContent> nodes = new List<IPublishedContent>
+                {
+                    node
+                };
+                
                 return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
             }
             catch (Exception ex)
@@ -70,7 +80,8 @@ namespace KS.Umbraco7.Calendar.Core
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
         public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, bool splitNoneRecurring = true)
         {
-            var node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).TypedContentAtRoot().First());
+            var helper = new UmbracoHelper(UmbracoContext.Current);
+            var node = helper.TypedContentAtRoot().First();
             var nodes = node.Descendants();
             return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
         }
@@ -84,8 +95,11 @@ namespace KS.Umbraco7.Calendar.Core
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
         public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, string documentType, bool splitNoneRecurring = true)
         {
-            var node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).TypedContentAtRoot().First());
-            return GetEventList(startDate, endDate, propertyType, node.Descendants(documentType), splitNoneRecurring);
+            var helper = new UmbracoHelper(UmbracoContext.Current);
+            var node = helper.TypedContentAtRoot().First();
+            var nodes = node.Descendants(documentType);
+
+            return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
         }
 
         ///<summary>Get a list of calendar events</summary>
@@ -96,9 +110,9 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="startNode">DynamicPublishedConent to look for events in</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
-        public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, string documentType, DynamicPublishedContent startNode, bool splitNoneRecurring = true)
+        public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, string documentType, IPublishedContent startNode, bool splitNoneRecurring = true)
         {
-            var nodes = startNode.Descendants(documentType);
+            var nodes = startNode?.Descendants(documentType);
             return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
         }
 
@@ -112,13 +126,15 @@ namespace KS.Umbraco7.Calendar.Core
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
         public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, string documentType, int nodeId, bool splitNoneRecurring = true)
         {
-            dynamic node;
+            var helper = new UmbracoHelper(UmbracoContext.Current);
+
+            IPublishedContent node;
             try
             {
-                node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).Content(nodeId));
+                node = helper.TypedContent(nodeId);
             }
             catch (Exception ex) {
-                node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).TypedContentAtRoot().First());
+                node = helper.TypedContentAtRoot().First();
             }
             if (node != null)
             {
@@ -137,7 +153,7 @@ namespace KS.Umbraco7.Calendar.Core
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
         public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, IPublishedContent startNode, bool splitNoneRecurring = true)
         {
-            var nodes = startNode.Descendants();
+            var nodes = startNode?.Descendants();
             return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
         }
 
@@ -150,17 +166,18 @@ namespace KS.Umbraco7.Calendar.Core
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
         public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, int nodeId, bool splitNoneRecurring = true)
         {
-            dynamic node;
+            var helper = new UmbracoHelper(UmbracoContext.Current);
+
+            IPublishedContent node;
             try
             {
-                node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).Content(nodeId));
+                node = helper.TypedContent(nodeId);
             }
             catch (Exception ex) {
-                node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).TypedContentAtRoot().First());
+                node = helper.TypedContentAtRoot().First();
             }
             if (node != null)
             {
-                //var node = new DynamicPublishedContent(new UmbracoHelper(UmbracoContext.Current).Content(nodeId));
                 var nodes = node.Descendants();
                 return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
             }
