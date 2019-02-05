@@ -20,8 +20,8 @@ namespace KS.Umbraco7.Calendar.Core
         {
             foreach (var node in e.SavedEntities)
             {
+                // Property editor alias: KS.Umbraco7.Calendar
 
-                /* calendar - KS.Umbraco7.Calendar */
                 try
                 {
                     if (node.PropertyTypes.Any(x => x.PropertyEditorAlias == "KS.Umbraco7.Calendar"))
@@ -43,12 +43,6 @@ namespace KS.Umbraco7.Calendar.Core
                                 var saveToPT = node.PropertyTypes.First(x => x.Alias == pvs["startDateField"].Value);
                                 var saveToDT = dataTypeService.GetDataTypeDefinitionById(saveToPT.DataTypeDefinitionId);
 
-                                //if (saveToDT.DatabaseType == DataTypeDatabaseType.Nvarchar || saveToDT.DatabaseType == DataTypeDatabaseType.Ntext)
-                                //{
-                                //    node.SetValue(pvs["startDateField"].Value, cal.startDate.ToString("yyyy-MM-dd HH:mm"));
-                                //    sender.SaveAndPublishWithStatus(node, 0, false);
-                                //}
-                                //else
                                 if (saveToDT.DatabaseType == DataTypeDatabaseType.Date)
                                 {
                                     node.SetValue(saveToPT.Alias, cal.StartDate);
