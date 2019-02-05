@@ -204,10 +204,10 @@ namespace KS.Umbraco7.Calendar.Core
                         switch (e.Recurrence)
                         {
                             case 1:
-                                //no recurrence
+                                // No recurrence
                                 if (e.EndDate.HasValue && e.StartDate.Date < e.EndDate.Value.Date && splitNoneRecurring)
                                 {
-                                    //event spanning several days
+                                    // Event spanning several days
                                     DateTime dSDate = startDate.Date <= e.StartDate.Date ? e.StartDate.Date : startDate.Date;
                                     for (DateTime d = dSDate; d <= e.EndDate.Value.Date ; d = d.AddDays(1))
                                     {
@@ -242,7 +242,7 @@ namespace KS.Umbraco7.Calendar.Core
                                 }
                                 break;
                             case 2:
-                                //repeat daily
+                                // Repeat daily
                                 DateTime dStartDate = startDate.Date <= e.StartDate.Date ? e.StartDate.Date : startDate.Date;
                                 //loop through all days from startdate to enddate
                                 for (DateTime d = dStartDate; d <= eEndDate; d = d.AddDays(1))
@@ -264,7 +264,7 @@ namespace KS.Umbraco7.Calendar.Core
                                 }
                                 break;
                             case 3:
-                                //repeat weekl
+                                // Repeat weekly
                                 //DateTime wStartDate = startDate.Date <= e.startDate.Date ? e.startDate.Date : startDate.Date;
                                 //loop through all weeks from startdate to enddate, e.weekInterval tell if event sould occure every week, every other week, every thrid week etc.
                                 //for (DateTime w = wStartDate; w <= eEndDate; w = w.AddDays(7 * e.weekInterval))
@@ -294,15 +294,14 @@ namespace KS.Umbraco7.Calendar.Core
                                 }
                                 break;
                             case 4:
-                                //repeat monthly
+                                // Repeat monthly
                                 DateTime mStartDate;
                                 
                                 if (e.MonthYearOption == 1)
                                 {
-                                    //use startdate every month
+                                    // Use startdate every month
                                     if (startDate < e.StartDate)
                                     {
-                                        //bruk e.startdate
                                         mStartDate = e.StartDate;
                                     }
                                     else
@@ -335,15 +334,14 @@ namespace KS.Umbraco7.Calendar.Core
                                 }
                                 else
                                 {
-                                    //specify
-                                    //looping every month from startdate to enddate
+                                    // Looping every month from start date to end date
                                     
                                     mStartDate = startDate < e.StartDate ? e.StartDate : startDate;
                                     for (DateTime d = mStartDate; d <= eEndDate; d = d.AddMonths(1))
                                     {
                                         if (e.Interval < 6)
                                         {
-                                            //1st - 5th weekday this month
+                                            // 1st - 5th weekday this month
                                             DateTime ed = d.GetNthWeekofMonth(e.Interval, (DayOfWeek)e.WeekDay);
                                             //c.Debug += " " + ed.ToString("dd.MM.yyyy hh:mm");
                                             //adding the event to the list
@@ -363,9 +361,9 @@ namespace KS.Umbraco7.Calendar.Core
                                         }
                                         else
                                         {
-                                            //last weekDay of month
+                                            // Last weekday of month
                                             DateTime lwd = d.Last((DayOfWeek)e.WeekDay);
-                                            //adding event to list
+                                            
                                             if (lwd <= eEndDate && (e.MonthOption.Value != 2 || (e.MonthOption.Value == 2 && e.Months.Contains(d.Month))))
                                             {
                                                 CalendarEvent ce = new CalendarEvent();
@@ -386,11 +384,10 @@ namespace KS.Umbraco7.Calendar.Core
 
                                 break;
                             case 5:
-                                //repeat yearly
+                                // Repeat yearly
                                 DateTime yStartDate;
                                 if (startDate < e.StartDate)
                                 {
-                                    //bruk e.startdate
                                     yStartDate = e.StartDate;
                                 }
                                 else
@@ -406,7 +403,7 @@ namespace KS.Umbraco7.Calendar.Core
                                 }
                                 if (e.MonthYearOption == 1)
                                 {
-                                    //use startdate
+                                    // Use start date
 
                                     for (DateTime d = yStartDate; d <= eEndDate; d = d.AddYears(1))
                                     {
@@ -423,14 +420,13 @@ namespace KS.Umbraco7.Calendar.Core
                                 }
                                 else
                                 {
-                                    //specify
                                     for (DateTime d = yStartDate.AddDays((startDate.Day - 1) * -1); d <= eEndDate; d = d.AddYears(1))
                                     {
                                         d = d.AddMonths((d.Month - 1) * -1).AddDays((d.Day - 1) * -1).AddMonths(e.Month - 1);
 
                                         if (e.Interval < 6)
                                         {
-                                            //1st - 5th weekday in month
+                                            // 1st - 5th weekday in month
                                             DateTime ed = d.GetNthWeekofMonth(e.Interval, (DayOfWeek)e.WeekDay);
                                             //c.Debug += " " + ed.ToString("dd.MM.yyyy hh:mm");
                                             if (startDate.Date <= ed.Date && ed <= endDate && d.Month == ed.Month)
@@ -449,7 +445,7 @@ namespace KS.Umbraco7.Calendar.Core
                                         }
                                         else
                                         {
-                                            //last weekDay in month
+                                            // Last weekday in month
                                             DateTime lwd = d.Last((DayOfWeek)e.WeekDay);
                                             CalendarEvent ce = new CalendarEvent();
                                             ce.Recurrence = e.Recurrence;
@@ -473,10 +469,7 @@ namespace KS.Umbraco7.Calendar.Core
                 }
             }
 
-            //order event list and return
             return events.OrderBy(x => x.StartDate).ToList();
         }
-
-
     }
 }
