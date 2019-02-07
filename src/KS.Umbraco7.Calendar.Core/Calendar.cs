@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Logging;
@@ -133,7 +134,10 @@ namespace KS.Umbraco7.Calendar.Core
             {
                 if (node.HasValue(propertyType))
                 {
-                    CalendarEvent e = Newtonsoft.Json.JsonConvert.DeserializeObject<CalendarEvent>(node.GetPropertyValue(propertyType).ToString());
+                    var propValue = node.GetPropertyValue<string>(propertyType);
+
+                    CalendarEvent e = JsonConvert.DeserializeObject<CalendarEvent>(propValue);
+                    
                     if (e.ExceptDates == null) {
                         e.ExceptDates = new List<DateTime>();
                     }
