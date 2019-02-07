@@ -125,6 +125,10 @@ namespace KS.Umbraco7.Calendar.Core
         private static List<CalendarEvent> GetEventList(DateTime startDate, DateTime endDate, string propertyType, IEnumerable<IPublishedContent> nodes, bool splitNoneRecurring = true)
         {
             List<CalendarEvent> events = new List<CalendarEvent>();
+
+            if (nodes == null || nodes.Any() == false)
+                return events;
+
             foreach (var node in nodes)
             {
                 if (node.HasValue(propertyType))
