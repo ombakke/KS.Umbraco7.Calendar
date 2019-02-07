@@ -6,6 +6,7 @@ using Umbraco.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
+using Umbraco.Web;
 
 namespace KS.Umbraco7.Calendar.Core
 {
@@ -18,6 +19,8 @@ namespace KS.Umbraco7.Calendar.Core
 
         void ContentService_Saving(IContentService sender, Umbraco.Core.Events.SaveEventArgs<IContent> e)
         {
+            if (UmbracoContext.Current == null) return;
+
             foreach (var node in e.SavedEntities)
             {
                 // Property editor alias: KS.Umbraco7.Calendar
@@ -44,8 +47,10 @@ namespace KS.Umbraco7.Calendar.Core
 
                                 if (saveToDT.DatabaseType == DataTypeDatabaseType.Date)
                                 {
+                                    var currentUser = UmbracoContext.Current.Security.CurrentUser;
+
                                     node.SetValue(saveToPT.Alias, cal.StartDate);
-                                    sender.Save(node, 0, false);
+                                    sender.Save(node, currentUser?.Id ?? 0, false);
                                 }
                             }
                         }
