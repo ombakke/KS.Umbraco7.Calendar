@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<language alias="da" intName="Danish" localName="dansk" lcid="1030" culture="da-DK">
+  <area alias="ksCalendar">
+    <key alias="monday">Mandag</key>
+    <key alias="tuesday">Tirsdag</key>
+    <key alias="wednesday">Onsdag</key>
+    <key alias="thursday">Torsdag</key>
+    <key alias="friday">Fredag</key>
+    <key alias="saturday">Lørdag</key>
+    <key alias="sunday">Søndag</key>
+    
+    <key alias="january">Januar</key>
+    <key alias="february">Februar</key>
+    <key alias="march">Marts</key>
+    <key alias="april">April</key>
+    <key alias="may">Maj</key>
+    <key alias="june">Juni</key>
+    <key alias="july">Juli</key>
+    <key alias="august">August</key>
+    <key alias="september">September</key>
+    <key alias="october">Oktober</key>
+    <key alias="november">November</key>
+    <key alias="december">December</key>
+    
+    <key alias="startDate">Startdato</key>
+    <key alias="endDate">Slutdato</key>
+
+    <key alias="none">Gentag ikke</key>
+    <key alias="daily">Hver dag</key>
+    <key alias="weekly">Hver uge</key>
+    <key alias="monthly">Hver måned</key>
+    <key alias="yearly">Hvert år</key>
+
+    <key alias="first">Første</key>
+    <key alias="second">Anden</key>
+    <key alias="third">Tredie</key>
+    <key alias="fourth">Fjerde</key>
+    <key alias="fifth">Femte</key>
+    <key alias="last">Sidste</key>
+    <key alias="single">Enkel</key>
+
+    <key alias="useStartDate">Brug startdato</key>
+    <key alias="specify">- eller vælg:</key>
+    <key alias="recurrence">Gentag</key>
+    <key alias="every">Hver</key>
+    <key alias="weekOn">uge, på en</key>
+    <key alias="everyMonth">Hver måned</key>
+    <key alias="chooseMonth">Vælg måned(er)</key>
+    <key alias="endDateGreaterThanStartDate">Slutdato skal være efter startdato</key>
+    <key alias="endDateRequired">Slutdato er påkrævet når der gentages</key>
+    <key alias="recurUntil">Gentag indtil</key>
+    <key alias="except">Undtagen</key>
+    <key alias="add">Tilføj</key>
+    <key alias="remove">Fjern</key>
+  </area>
+</language>

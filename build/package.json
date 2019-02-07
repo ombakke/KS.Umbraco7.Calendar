@@ -1,0 +1,21 @@
+{
+  "name": "KS.Umbraco7.Calendar",
+  "url": "https://github.com/ombakke/KS.Umbraco7.Calendar",
+  "license": "MIT",
+  "author": {
+    "name": "Bjarne Fyrstenborg",
+    "url": "https://github.com/bjarnef"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ombakke/KS.Umbraco7.Calendar"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-nuget": "^0.3.1",
+    "grunt-zip": "^0.18.1",
+    "grunt-umbraco-package": "1.0.0",
+    "grunt-contrib-clean": "^2.0.0"
+  }
+}

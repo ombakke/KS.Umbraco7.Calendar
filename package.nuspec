@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>KS.Umbraco7.Calendar</id>
+    <version>1.0.0</version>
+    <title>KS.Umbraco7.Calendar</title>
+    <authors>Bjarne Fyrstenborg</authors>
+    <owners>Bjarne Fyrstenborg</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/ombakke/KS.Umbraco7.Calendar</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/bjarnef/Switcher/master/assets/img/switcher-icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple property editor to configurate recurring events.</description>
+    <tags>Umbraco, Calendar</tags>
+    <releaseNotes>
+v1.0.0
+New: Nuget package build
+    </releaseNotes>
+  </metadata>
+  <files>
+    <file src="..\app\App_Plugins\KS.Umbraco7.Calendar\**\*.*" target="content\App_Plugins\KS.Umbraco7.Calendar" />
+  </files>
+</package>
