@@ -80,6 +80,8 @@
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\en-gb.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\en-us.js" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\language\nb-NO.js" />
+    <Content Include="App_Plugins\KS.Umbraco7.Calendar\lang\en-GB.xml" />
+    <Content Include="App_Plugins\KS.Umbraco7.Calendar\lang\en-US.xml" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\lang\da-DK.xml" />
     <Content Include="App_Plugins\KS.Umbraco7.Calendar\package.manifest" />
     <None Include="Web.Debug.config">

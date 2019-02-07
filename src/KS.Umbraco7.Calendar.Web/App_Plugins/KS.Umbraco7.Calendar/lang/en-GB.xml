@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<language alias="en" intName="English (UK)" localName="English (UK)" lcid="2057" culture="en-GB">
+  <area alias="ksCalendar">
+    <key alias="monday">Monday</key>
+    <key alias="tuesday">Tuesday</key>
+    <key alias="wednesday">Wednesday</key>
+    <key alias="thursday">Thursday</key>
+    <key alias="friday">Friday</key>
+    <key alias="saturday">Saturday</key>
+    <key alias="sunday">Sunday</key>
+    
+    <key alias="january">January</key>
+    <key alias="february">February</key>
+    <key alias="march">March</key>
+    <key alias="april">April</key>
+    <key alias="may">May</key>
+    <key alias="june">June</key>
+    <key alias="july">July</key>
+    <key alias="august">August</key>
+    <key alias="september">September</key>
+    <key alias="october">October</key>
+    <key alias="november">November</key>
+    <key alias="december">December</key>
+    
+    <key alias="startDate">Start date</key>
+    <key alias="endDate">End date</key>
+
+    <key alias="none">None</key>
+    <key alias="daily">Daily</key>
+    <key alias="weekly">Weekly</key>
+    <key alias="monthly">Monthly</key>
+    <key alias="yearly">Yearly</key>
+
+    <key alias="first">First</key>
+    <key alias="second">Second</key>
+    <key alias="third">Third</key>
+    <key alias="fourth">Fourth</key>
+    <key alias="fifth">Fifth</key>
+    <key alias="last">Last</key>
+    <key alias="single">Single</key>
+
+    <key alias="useStartDate">Use start date</key>
+    <key alias="specify">Specify</key>
+    <key alias="recurrence">Recurrence</key>
+    <key alias="every">Every</key>
+    <key alias="weekOn">week on</key>
+    <key alias="everyMonth">Every month</key>
+    <key alias="chooseMonth">Choose month(s)</key>
+    <key alias="endDateGreaterThanStartDate">End date must be greater than start date</key>
+    <key alias="endDateRequired">End date is required on recurring events</key>
+    <key alias="recurUntil">Recur until</key>
+    <key alias="except">Except on</key>
+    <key alias="add">Add</key>
+    <key alias="remove">Remove</key>
+  </area>
+</language>
