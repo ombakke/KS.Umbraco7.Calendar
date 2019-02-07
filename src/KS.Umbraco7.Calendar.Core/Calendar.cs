@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Models;
 using Umbraco.Web;
-using Umbraco.Web.Models;
 
 namespace KS.Umbraco7.Calendar.Core
 {
     /// <summary>
-    /// Functions for getting calendar-events
+    /// Methods for getting calendar events
     /// </summary>
-    /// 
     public static class Calendar
     {
         ///<summary>Get a list of calendar events from a single node</summary>
@@ -22,13 +18,15 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="nodeId">Id of the event node</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by date</returns>
-        public static List<CalendarEvent> GetNodeEvents(DateTime date, int nodeId, string propertyType, bool splitNoneRecurring = true){
+        public static List<CalendarEvent> GetNodeEvents(UmbracoContext umbracoContext, DateTime date, int nodeId, string propertyType, bool splitNoneRecurring = true){
             List<CalendarEvent> events = new List<CalendarEvent>();
             try
             {
                 var helper = new UmbracoHelper(UmbracoContext.Current);
-                var node = helper.TypedContent(nodeId);
+                var _node = helper.TypedContent(nodeId);
 
+                var node = umbracoContext.ContentCache.GetById(nodeId);
+                
                 List<IPublishedContent> nodes = new List<IPublishedContent>
                 {
                     node
@@ -36,9 +34,11 @@ namespace KS.Umbraco7.Calendar.Core
 
                 return GetEventList(date.Date, date.Date.AddDays(1).AddMilliseconds(-1),propertyType, nodes, splitNoneRecurring);
             }
-            catch (Exception ex) {
-                //LogHelper.Error<CalendarEvent>("getNodeEvents", ex);             
+            catch (Exception ex)
+            {
+                LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Could not get node events", ex);         
             }
+
             return events;
         }
 
@@ -49,13 +49,15 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="nodeId">Id of the event node</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
-        public static List<CalendarEvent> GetNodeEvents(DateTime startDate, DateTime endDate, int nodeId, string propertyType, bool splitNoneRecurring = true)
+        public static List<CalendarEvent> GetNodeEvents(UmbracoContext umbracoContext, DateTime startDate, DateTime endDate, int nodeId, string propertyType, bool splitNoneRecurring = true)
         {
             List<CalendarEvent> events = new List<CalendarEvent>();
             try
             {
                 var helper = new UmbracoHelper(UmbracoContext.Current);
-                var node = helper.TypedContent(nodeId);
+                var _node = helper.TypedContent(nodeId);
+
+                var node = umbracoContext.ContentCache.GetById(nodeId);
 
                 List<IPublishedContent> nodes = new List<IPublishedContent>
                 {
@@ -66,8 +68,9 @@ namespace KS.Umbraco7.Calendar.Core
             }
             catch (Exception ex)
             {
-                //LogHelper.Error<CalendarEvent>("getNodeEvents2", ex);         
+                LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Could not get node events", ex);
             }
+
             return events;
         }
 
@@ -78,11 +81,14 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="propertyType">Alias of the property holding the Datatype KS.Umbraco7.Calendar</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
-        public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, bool splitNoneRecurring = true)
+        public static List<CalendarEvent> GetEvents(UmbracoContext umbracoContext, DateTime startDate, DateTime endDate, string propertyType, bool splitNoneRecurring = true)
         {
             var helper = new UmbracoHelper(UmbracoContext.Current);
             var node = helper.TypedContentAtRoot().First();
             var nodes = node.Descendants();
+
+            //var nodes = umbracoContext.ContentCache.GetByXPath("//");
+
             return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
         }
 
@@ -93,11 +99,13 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="documentType">Alias of the document type</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
-        public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, string documentType, bool splitNoneRecurring = true)
+        public static List<CalendarEvent> GetEvents(UmbracoContext umbracoContext, DateTime startDate, DateTime endDate, string propertyType, string documentType, bool splitNoneRecurring = true)
         {
             var helper = new UmbracoHelper(UmbracoContext.Current);
             var node = helper.TypedContentAtRoot().First();
-            var nodes = node.Descendants(documentType);
+            var _nodes = node.Descendants(documentType);
+
+            var nodes = umbracoContext.ContentCache.GetByXPath($"//{documentType}");
 
             return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
         }
@@ -110,9 +118,11 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="startNode">DynamicPublishedConent to look for events in</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
-        public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, string documentType, IPublishedContent startNode, bool splitNoneRecurring = true)
+        public static List<CalendarEvent> GetEvents(UmbracoContext umbracoContext, DateTime startDate, DateTime endDate, string propertyType, string documentType, IPublishedContent startNode, bool splitNoneRecurring = true)
         {
-            var nodes = startNode?.Descendants(documentType);
+            var _nodes = startNode?.Descendants(documentType);
+            var nodes = umbracoContext.ContentCache.GetByXPath($"//{documentType}");
+
             return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
         }
 
@@ -124,23 +134,23 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="nodeId">Id of node to look for events in descendants</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
-        public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, string documentType, int nodeId, bool splitNoneRecurring = true)
+        public static List<CalendarEvent> GetEvents(UmbracoContext umbracoContext, DateTime startDate, DateTime endDate, string propertyType, string documentType, int nodeId, bool splitNoneRecurring = true)
         {
             var helper = new UmbracoHelper(UmbracoContext.Current);
 
-            IPublishedContent node;
             try
             {
-                node = helper.TypedContent(nodeId);
-            }
-            catch (Exception ex) {
-                node = helper.TypedContentAtRoot().First();
-            }
-            if (node != null)
-            {
-                var nodes = node.Descendants(documentType);
+                var node = helper.TypedContent(nodeId);
+
+                var nodes = umbracoContext.ContentCache.GetByXPath($"//{documentType}");
+
                 return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
             }
+            catch (Exception ex)
+            {
+                LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Could not get node events", ex);
+            }
+
             return new List<CalendarEvent>();
         }
 
@@ -151,9 +161,11 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="startNode">DynamicPublishedConent to look for events in</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
-        public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, IPublishedContent startNode, bool splitNoneRecurring = true)
+        public static List<CalendarEvent> GetEvents(UmbracoContext umbracoContext, DateTime startDate, DateTime endDate, string propertyType, IPublishedContent startNode, bool splitNoneRecurring = true)
         {
-            var nodes = startNode?.Descendants();
+            var _nodes = startNode?.Descendants();
+            var nodes = umbracoContext.ContentCache.GetByXPath("//");
+
             return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
         }
 
@@ -164,23 +176,22 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="nodeId">Id of node to look for events in descendants</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
-        public static List<CalendarEvent> GetEvents(DateTime startDate, DateTime endDate, string propertyType, int nodeId, bool splitNoneRecurring = true)
+        public static List<CalendarEvent> GetEvents(UmbracoContext umbracoContext, DateTime startDate, DateTime endDate, string propertyType, int nodeId, bool splitNoneRecurring = true)
         {
             var helper = new UmbracoHelper(UmbracoContext.Current);
 
-            IPublishedContent node;
             try
             {
-                node = helper.TypedContent(nodeId);
-            }
-            catch (Exception ex) {
-                node = helper.TypedContentAtRoot().First();
-            }
-            if (node != null)
-            {
-                var nodes = node.Descendants();
+                var node = helper.TypedContent(nodeId);
+
+                var nodes = umbracoContext.ContentCache.GetByXPath($"//");
                 return GetEventList(startDate, endDate, propertyType, nodes, splitNoneRecurring);
             }
+            catch (Exception ex)
+            {
+                LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Could not get node events", ex);
+            }
+
             return new List<CalendarEvent>();
         }
 
@@ -189,7 +200,6 @@ namespace KS.Umbraco7.Calendar.Core
         ///<param name="endDate">End date for event list</param>
         ///<param name="propertyType">Alias of the property holding the Datatype KS.Umbraco7.Calendar</param>
         ///<param name="nodes">DynamicPublishedContentlist holding the nodes where we will be looking for events</param>
-        ///
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
         private static List<CalendarEvent> GetEventList(DateTime startDate, DateTime endDate, string propertyType, IEnumerable<IPublishedContent> nodes, bool splitNoneRecurring = true)
         {
@@ -267,9 +277,12 @@ namespace KS.Umbraco7.Calendar.Core
                                     //if the event is selected for the actual day, add it to the list
                                     if (e.Days.Contains((int)d.DayOfWeek))
                                     {
-                                        CalendarEvent ce = new CalendarEvent();
-                                        ce.Recurrence = e.Recurrence;
-                                        ce.StartDate = e.StartDate.AddDays(d.Date.Subtract(e.StartDate.Date).Days);
+                                        CalendarEvent ce = new CalendarEvent
+                                        {
+                                            Recurrence = e.Recurrence,
+                                            StartDate = e.StartDate.AddDays(d.Date.Subtract(e.StartDate.Date).Days)
+                                        };
+
                                         ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                         ce.Content = e.Content;
                                         //ce.Debug = "Enddate: " + eEndDate.ToString("dd.MM.yyyy HH:mm");
@@ -295,9 +308,12 @@ namespace KS.Umbraco7.Calendar.Core
                                         {
                                             if ((e.Days.Contains((int)d.DayOfWeek) && (startDate <= d && d <= endDate)))
                                             {
-                                                CalendarEvent ce = new CalendarEvent();
-                                                ce.Recurrence = e.Recurrence;
-                                                ce.StartDate = e.StartDate.AddDays(d.Date.Subtract(e.StartDate.Date).Days);
+                                                CalendarEvent ce = new CalendarEvent
+                                                {
+                                                    Recurrence = e.Recurrence,
+                                                    StartDate = e.StartDate.AddDays(d.Date.Subtract(e.StartDate.Date).Days)
+                                                };
+
                                                 ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                                 ce.Content = e.Content;
                                                 //ce.Debug = "Her";
@@ -337,9 +353,12 @@ namespace KS.Umbraco7.Calendar.Core
                                     {
                                         if (e.MonthOption.Value != 2 || (e.MonthOption.Value == 2 && e.Months.Contains(d.Month)))
                                         {
-                                            CalendarEvent ce = new CalendarEvent();
-                                            ce.Recurrence = e.Recurrence;
-                                            ce.StartDate = e.StartDate.AddDays(d.Date.Subtract(e.StartDate.Date).Days);
+                                            CalendarEvent ce = new CalendarEvent
+                                            {
+                                                Recurrence = e.Recurrence,
+                                                StartDate = e.StartDate.AddDays(d.Date.Subtract(e.StartDate.Date).Days)
+                                            };
+
                                             ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                             ce.Content = e.Content;
                                             if (!e.ExceptDates.Contains(ce.StartDate.Date) && ce.StartDate <= endDate)
@@ -364,9 +383,12 @@ namespace KS.Umbraco7.Calendar.Core
                                             //adding the event to the list
                                             if (startDate.Date <= ed.Date && d.Month == ed.Month && (e.MonthOption.Value != 2 || (e.MonthOption.Value == 2 && e.Months.Contains(ed.Month))))
                                             {
-                                                CalendarEvent ce = new CalendarEvent();
-                                                ce.Recurrence = e.Recurrence;
-                                                ce.StartDate = e.StartDate.AddDays(ed.Date.Subtract(e.StartDate.Date).Days);
+                                                CalendarEvent ce = new CalendarEvent
+                                                {
+                                                    Recurrence = e.Recurrence,
+                                                    StartDate = e.StartDate.AddDays(ed.Date.Subtract(e.StartDate.Date).Days)
+                                                };
+
                                                 ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                                 ce.Content = e.Content;
                                                 //ce.Debug = "d: " + d.ToString("dd.MM.yyyy hh:mm") + "  -  " + "ed.month: " + ed.Month + "  d.month: " + d.Month + "  ";
@@ -383,9 +405,12 @@ namespace KS.Umbraco7.Calendar.Core
                                             
                                             if (lwd <= eEndDate && (e.MonthOption.Value != 2 || (e.MonthOption.Value == 2 && e.Months.Contains(d.Month))))
                                             {
-                                                CalendarEvent ce = new CalendarEvent();
-                                                ce.Recurrence = e.Recurrence;
-                                                ce.StartDate = e.StartDate.AddDays(lwd.Date.Subtract(e.StartDate.Date).Days);
+                                                CalendarEvent ce = new CalendarEvent
+                                                {
+                                                    Recurrence = e.Recurrence,
+                                                    StartDate = e.StartDate.AddDays(lwd.Date.Subtract(e.StartDate.Date).Days)
+                                                };
+
                                                 ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                                 ce.Content = e.Content;
                                                 //ce.Debug = "Siste " + (DayOfWeek)e.weekDay + " i måneden";
@@ -424,9 +449,12 @@ namespace KS.Umbraco7.Calendar.Core
 
                                     for (DateTime d = yStartDate; d <= eEndDate; d = d.AddYears(1))
                                     {
-                                        CalendarEvent ce = new CalendarEvent();
-                                        ce.Recurrence = e.Recurrence;
-                                        ce.StartDate = e.StartDate.AddYears(d.Year - e.StartDate.Year);
+                                        CalendarEvent ce = new CalendarEvent
+                                        {
+                                            Recurrence = e.Recurrence,
+                                            StartDate = e.StartDate.AddYears(d.Year - e.StartDate.Year)
+                                        };
+
                                         ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                         ce.Content = e.Content;
                                         if (startDate <= ce.StartDate && ce.StartDate <= endDate && !e.ExceptDates.Contains(ce.StartDate.Date))
@@ -448,9 +476,12 @@ namespace KS.Umbraco7.Calendar.Core
                                             //c.Debug += " " + ed.ToString("dd.MM.yyyy hh:mm");
                                             if (startDate.Date <= ed.Date && ed <= endDate && d.Month == ed.Month)
                                             {
-                                                CalendarEvent ce = new CalendarEvent();
-                                                ce.Recurrence = e.Recurrence;
-                                                ce.StartDate = e.StartDate.AddDays(ed.Date.Subtract(e.StartDate.Date).Days);
+                                                CalendarEvent ce = new CalendarEvent
+                                                {
+                                                    Recurrence = e.Recurrence,
+                                                    StartDate = e.StartDate.AddDays(ed.Date.Subtract(e.StartDate.Date).Days)
+                                                };
+
                                                 ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                                 ce.Content = e.Content;
                                                 //ce.Debug = "d: " + d.ToString("dd.MM.yyyy hh:mm") + "  -  " + "ed.month: " + ed.Month + "  d.month: " + d.Month + "  ";
@@ -464,9 +495,12 @@ namespace KS.Umbraco7.Calendar.Core
                                         {
                                             // Last weekday in month
                                             DateTime lwd = d.Last((DayOfWeek)e.WeekDay);
-                                            CalendarEvent ce = new CalendarEvent();
-                                            ce.Recurrence = e.Recurrence;
-                                            ce.StartDate = e.StartDate.AddDays(lwd.Date.Subtract(e.StartDate.Date).Days);
+                                            CalendarEvent ce = new CalendarEvent
+                                            {
+                                                Recurrence = e.Recurrence,
+                                                StartDate = e.StartDate.AddDays(lwd.Date.Subtract(e.StartDate.Date).Days)
+                                            };
+
                                             ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                             ce.Content = e.Content;
                                             //ce.Debug = "Siste " + (DayOfWeek)e.weekDay + " i måneden";
