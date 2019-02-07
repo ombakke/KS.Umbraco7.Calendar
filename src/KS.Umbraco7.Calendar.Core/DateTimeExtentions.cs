@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KS.Umbraco7.Calendar.Core
 {
-
     /// <summary>
     /// Extentions for DateTime
     /// </summary>
-    /// 
     public static class DateTimeExtentions
     {
         ///<summary>Gets the first week day following a date.</summary>
@@ -101,7 +95,7 @@ namespace KS.Umbraco7.Calendar.Core
         /// <returns>DateTime</returns>
         public static DateTime GetNthWeekofMonth(this DateTime current, int nthWeek, DayOfWeek dayOfWeek)
         {
-            return current.AddDays((current.Day *-1)+1).Next(dayOfWeek).AddDays((nthWeek - 1) * 7);
+            return current.AddDays((current.Day *-1) + 1).Next(dayOfWeek).AddDays((nthWeek - 1) * 7);
         }
     }
 }
