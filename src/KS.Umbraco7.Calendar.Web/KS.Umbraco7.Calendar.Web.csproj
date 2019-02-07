@@ -128,8 +128,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>XCOPY "$(TargetDir)$(TargetFileName)" "D:\Users\omb\Mine Dokumenter\My Web Sites\WebSite1\bin\" /Y
-XCOPY "$(ProjectDir)\App_Plugins\*.*" "D:\Users\omb\Mine Dokumenter\My Web Sites\WebSite1\App_Plugins\" /y/s/e</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
