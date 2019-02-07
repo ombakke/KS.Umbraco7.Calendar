@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core;
@@ -10,7 +11,6 @@ namespace KS.Umbraco7.Calendar.Core
 {
     public class CalendarEventHandler : ApplicationEventHandler
     {
-
         protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
             ContentService.Saving += ContentService_Saving;
@@ -34,11 +34,10 @@ namespace KS.Umbraco7.Calendar.Core
 
                         if (pvs.Any(x => x.Key == "startDateField" && x.Value.Value != null))
                         {
-
                             if (node.HasProperty(pvs["startDateField"].Value))
                             {
-                                string calJson = node.GetValue(pt.Alias).ToString();
-                                CalendarEvent cal = Newtonsoft.Json.JsonConvert.DeserializeObject<CalendarEvent>(calJson);
+                                string calJson = node.GetValue<string>(pt.Alias);
+                                CalendarEvent cal = JsonConvert.DeserializeObject<CalendarEvent>(calJson);
 
                                 var saveToPT = node.PropertyTypes.First(x => x.Alias == pvs["startDateField"].Value);
                                 var saveToDT = dataTypeService.GetDataTypeDefinitionById(saveToPT.DataTypeDefinitionId);
@@ -54,7 +53,7 @@ namespace KS.Umbraco7.Calendar.Core
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Info(typeof(CalendarEventHandler), ex.ToString());
+                    LogHelper.Error<CalendarEventHandler>("Could not save events for node.", ex);
                 }
             }
         }
