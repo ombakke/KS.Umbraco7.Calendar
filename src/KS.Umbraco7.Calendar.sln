@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Umbraco7.Calendar.Core", "KS.Umbraco7.Calendar.Core\KS.Umbraco7.Calendar.Core.csproj", "{132052B1-992A-4C36-A02D-DC1468DEDDC3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Umbraco7.Calendar", "KS.Umbraco7.Calendar.Core\KS.Umbraco7.Calendar.csproj", "{132052B1-992A-4C36-A02D-DC1468DEDDC3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Umbraco7.Calendar.Web", "KS.Umbraco7.Calendar.Web\KS.Umbraco7.Calendar.Web.csproj", "{7B790A56-2E21-4296-A1E4-95C8C7217016}"
 EndProject
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B3BBE3E-CA1B-4EF2-B1FC-A7ECFD169BCB}
 	EndGlobalSection
 EndGlobal

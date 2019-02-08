@@ -7,8 +7,8 @@
     <ProjectGuid>{132052B1-992A-4C36-A02D-DC1468DEDDC3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KS.Umbraco7.Calendar.Core</RootNamespace>
-    <AssemblyName>KS.Umbraco7.Calendar.Core</AssemblyName>
+    <RootNamespace>KS.Umbraco7.Calendar</RootNamespace>
+    <AssemblyName>KS.Umbraco7.Calendar</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
