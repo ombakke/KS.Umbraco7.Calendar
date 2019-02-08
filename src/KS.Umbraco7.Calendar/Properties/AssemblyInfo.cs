@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("KS.Umbraco7.Calendar")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Simple property editor to configurate recurring events.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Kreativ Strek AS")]
 [assembly: AssemblyProduct("KS.Umbraco7.Calendar.Core")]

@@ -92,7 +92,8 @@ module.exports = function(grunt) {
         },
 		nugetpack: {
             release: {
-                src: '../package.nuspec', //'src/' + pkg.name + '/' + pkg.name + '.csproj',
+                src: projectDir + pkg.name + '.csproj',
+                //src: '../src/package.nuspec', //'src/' + pkg.name + '/' + pkg.name + '.csproj',
                 dest: releaseDir + '/nuget/',
                 options: {
                     properties: 'Platform=AnyCPU;Configuration=Release'

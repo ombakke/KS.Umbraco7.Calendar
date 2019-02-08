@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/ombakke/KS.Umbraco7.Calendar</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/ombakke/KS.Umbraco7.Calendar/master/assets/img/calendar-icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>$copyright$</copyright>
+    <releaseNotes>
+v1.0.0
+New: Nuget package build
+    </releaseNotes>
+    <dependencies>
+      <dependency id="UmbracoCms.Core" version="[7.4,8.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\KS.Umbraco7.Calendar.Web\App_Plugins\KS.Umbraco7.Calendar\**\*.*" target="content\App_Plugins\KS.Umbraco7.Calendar" />
+  </files>
+</package>
