@@ -9,7 +9,12 @@ module.exports = function(grunt) {
     var sourceDir = '../src/',
         projectDir = sourceDir + pkg.name + '/';
 
-    var projectRoot = 'src/' + pkgMeta.name + '/';
+	// get the root path of the project
+    var projectRoot = '../src/' + pkg.name + '/';
+	
+	// get the release paths
+    var releaseDir = 'releases/',
+        releaseFilesDir = releaseDir + 'files/';
 
     // Load information about the assembly
     //var assembly = grunt.file.readJSON(projectRoot + 'Properties/AssemblyInfo.json');
@@ -22,13 +27,13 @@ module.exports = function(grunt) {
         //pkgMeta: pkgMeta,
         clean: {
             files: [
-                'releases/temp/'
+                releaseFilesDir + '**/*.*' //'releases/temp/'
             ]
         },
         copy: {
-            release: {
+            /*release: {
                 files: [
-                    /*{
+                    {
                         expand: true,
                         cwd: projectRoot + 'bin/Release/',
                         src: [
@@ -36,39 +41,61 @@ module.exports = function(grunt) {
                             pkgMeta.name + '.xml'
                         ],
                         dest: 'files/bin/'
-                    }*/
+                    }
+                ]
+            }*/
+            bacon: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: sourceDir + pkg.name + '.Core/' + 'obj/Release/', //projectDir + 'obj/Release/',
+                        src: [
+                            pkg.name + '.Core.dll',
+                            pkg.name + '.Core.xml'
+                        ],
+                        dest: releaseFilesDir + 'bin/'
+                    },
+                    {
+                        expand: true,
+                        cwd: sourceDir + pkg.name + '.Web/App_Plugins/' + pkg.name, //projectDir + '.Web/',
+                        src: ['**'],
+                        dest: releaseFilesDir
+                    }
                 ]
             }
         },
-        nugetpack: {
+		zip: {
             release: {
-                src: 'config/package.nuspec', //src: 'src/' + pkgMeta.name + '/' + pkgMeta.name + '.csproj',
-                dest: 'releases/nuget/',
-            }
-        },
-        zip: {
-            release: {
-                cwd: 'app/',
+                cwd: releaseFilesDir,
                 src: [
-                    'app/**/*.*'
+                    releaseFilesDir + '**/*.*'
                 ],
-                dest: 'releases/github/' + pkgMeta.name + '.v' + pkgMeta.version + '.zip'
+                dest: releaseDir + 'zip/' + pkg.name + '.v' + pkg.version + '.zip'
             }
         },
         umbracoPackage: {
             release: {
-                src: 'app/',
-                dest: 'releases/umbraco',
+                src: releaseFilesDir,
+                dest: releaseDir + '/umbraco',
                 options: {
-                    name: pkgMeta.name,
-                    version: pkgMeta.version,
-                    url: pkgMeta.url,
-                    license: pkgMeta.license,
-                    licenseUrl: pkgMeta.licenseUrl,
-                    author: pkgMeta.author,
-                    authorUrl: pkgMeta.authorUrl,
-                    readme: pkgMeta.readme,
-                    outputName: pkgMeta.name + '.v' + pkgMeta.version + '.zip'
+                    name: pkg.name,
+                    version: pkg.version,
+                    url: pkg.url,
+                    license: pkg.license,
+                    licenseUrl: "https://opensource.org/licenses/MIT",
+                    author: pkg.author.name,
+                    authorUrl: pkg.author.url,
+                    readme: pkg.readme,
+                    outputName: pkg.name + '.v' + pkg.version + '.zip'
+                }
+            }
+        },
+		nugetpack: {
+            release: {
+                src: '../package.nuspec', //'src/' + pkg.name + '/' + pkg.name + '.csproj',
+                dest: releaseDir + '/nuget/',
+                options: {
+                    properties: 'Platform=AnyCPU;Configuration=Release'
                 }
             }
         }
@@ -82,5 +109,4 @@ module.exports = function(grunt) {
 
     grunt.registerTask('dev', ['clean', 'copy', 'nugetpack', 'zip', 'umbracoPackage']);
     grunt.registerTask('default', ['dev']);
-
 };
