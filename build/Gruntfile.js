@@ -48,10 +48,10 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: sourceDir + pkg.name + '.Core/' + 'obj/Release/', //projectDir + 'obj/Release/',
+                        cwd: sourceDir + pkg.name + '/' + 'obj/Release/', //projectDir + 'obj/Release/',
                         src: [
-                            pkg.name + '.Core.dll',
-                            pkg.name + '.Core.xml'
+                            pkg.name + '.dll',
+                            pkg.name + '.xml'
                         ],
                         dest: releaseFilesDir + 'bin/'
                     },
