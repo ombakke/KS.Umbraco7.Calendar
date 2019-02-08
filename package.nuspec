@@ -16,6 +16,9 @@
 v1.0.0
 New: Nuget package build
     </releaseNotes>
+    <dependencies>
+      <dependency id="UmbracoCms.Core" version="[7.4,8.0)" />
+    </dependencies>
   </metadata>
   <files>
     <file src="src\KS.Umbraco7.Calendar.Web\App_Plugins\KS.Umbraco7.Calendar\**\*.*" target="content\App_Plugins\KS.Umbraco7.Calendar" />
