@@ -163,6 +163,7 @@ namespace KS.Umbraco7.Calendar
                         {
                             case 1:
                                 // No recurrence
+
                                 if (e.EndDate.HasValue && e.StartDate.Date < e.EndDate.Value.Date && splitNoneRecurring)
                                 {
                                     // Event spanning several days
@@ -175,8 +176,6 @@ namespace KS.Umbraco7.Calendar
                                             ce.StartDate = d.Date;
                                         }
                                         else {
-                                            //TimeSpan ts = d.Date - e.StartDate;
-                                            //ce.StartDate = e.StartDate.AddDays(ts.Days *-1);
                                             ce.StartDate = e.StartDate;
                                         }
                                         if (d.Date < e.EndDate.Value.Date)
@@ -201,11 +200,12 @@ namespace KS.Umbraco7.Calendar
                                 break;
                             case 2:
                                 // Repeat daily
+
                                 DateTime dStartDate = startDate.Date <= e.StartDate.Date ? e.StartDate.Date : startDate.Date;
-                                //loop through all days from startdate to enddate
+                                // Loop through all days from startdate to enddate
                                 for (DateTime d = dStartDate; d <= eEndDate; d = d.AddDays(1))
                                 {
-                                    //if the event is selected for the actual day, add it to the list
+                                    // If the event is selected for the actual day, add it to the list
                                     if (e.Days.Contains((int)d.DayOfWeek))
                                     {
                                         CalendarEvent ce = new CalendarEvent
@@ -216,7 +216,7 @@ namespace KS.Umbraco7.Calendar
 
                                         ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                         ce.Content = e.Content;
-                                        //ce.Debug = "Enddate: " + eEndDate.ToString("dd.MM.yyyy HH:mm");
+
                                         if (!e.ExceptDates.Contains(ce.StartDate.Date) && ce.StartDate <= endDate)
                                         {
                                             events.Add(ce);
@@ -226,9 +226,10 @@ namespace KS.Umbraco7.Calendar
                                 break;
                             case 3:
                                 // Repeat weekly
-                                //DateTime wStartDate = startDate.Date <= e.startDate.Date ? e.startDate.Date : startDate.Date;
-                                //loop through all weeks from startdate to enddate, e.weekInterval tell if event sould occure every week, every other week, every thrid week etc.
-                                //for (DateTime w = wStartDate; w <= eEndDate; w = w.AddDays(7 * e.weekInterval))
+
+                                // DateTime wStartDate = startDate.Date <= e.startDate.Date ? e.startDate.Date : startDate.Date;
+                                // loop through all weeks from startdate to enddate, e.weekInterval tell if event sould occure every week, every other week, every thrid week etc.
+                                // for (DateTime w = wStartDate; w <= eEndDate; w = w.AddDays(7 * e.weekInterval))
                                 if (e.StartDate < endDate)
                                 {
                                     for (DateTime w = e.StartDate.Date; w <= eEndDate; w = w.AddDays(7 * e.WeekInterval))
@@ -247,7 +248,6 @@ namespace KS.Umbraco7.Calendar
 
                                                 ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                                 ce.Content = e.Content;
-                                                //ce.Debug = "Her";
                                                 if (!e.ExceptDates.Contains(ce.StartDate.Date) && ce.StartDate <= endDate)
                                                 {
                                                     events.Add(ce);
@@ -259,6 +259,7 @@ namespace KS.Umbraco7.Calendar
                                 break;
                             case 4:
                                 // Repeat monthly
+
                                 DateTime mStartDate;
                                 
                                 if (e.MonthYearOption == 1)
@@ -301,8 +302,7 @@ namespace KS.Umbraco7.Calendar
                                 }
                                 else
                                 {
-                                    // Looping every month from start date to end date
-                                    
+                                    // Looping every month from start date to end date                           
                                     mStartDate = startDate < e.StartDate ? e.StartDate : startDate;
                                     for (DateTime d = mStartDate; d <= eEndDate; d = d.AddMonths(1))
                                     {
@@ -310,8 +310,7 @@ namespace KS.Umbraco7.Calendar
                                         {
                                             // 1st - 5th weekday this month
                                             DateTime ed = d.GetNthWeekofMonth(e.Interval, (DayOfWeek)e.WeekDay);
-                                            //c.Debug += " " + ed.ToString("dd.MM.yyyy hh:mm");
-                                            //adding the event to the list
+
                                             if (startDate.Date <= ed.Date && d.Month == ed.Month && (e.MonthOption.Value != 2 || (e.MonthOption.Value == 2 && e.Months.Contains(ed.Month))))
                                             {
                                                 CalendarEvent ce = new CalendarEvent
@@ -322,7 +321,7 @@ namespace KS.Umbraco7.Calendar
 
                                                 ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                                 ce.Content = e.Content;
-                                                //ce.Debug = "d: " + d.ToString("dd.MM.yyyy hh:mm") + "  -  " + "ed.month: " + ed.Month + "  d.month: " + d.Month + "  ";
+
                                                 if (!e.ExceptDates.Contains(ce.StartDate.Date) && ce.StartDate <= endDate)
                                                 {
                                                     events.Add(ce);
@@ -344,8 +343,7 @@ namespace KS.Umbraco7.Calendar
 
                                                 ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                                 ce.Content = e.Content;
-                                                //ce.Debug = "Siste " + (DayOfWeek)e.weekDay + " i måneden";
-                                                //ce.Debug = "d: " + d.ToString("dd.MM.yyyy hh:mm") + "  -  " + "ed.month: " + ed.Month + "  d.month: " + d.Month + "  ";
+
                                                 if (!e.ExceptDates.Contains(ce.StartDate.Date) && ce.StartDate <= endDate)
                                                 {
                                                     events.Add(ce);
@@ -358,6 +356,7 @@ namespace KS.Umbraco7.Calendar
                                 break;
                             case 5:
                                 // Repeat yearly
+
                                 DateTime yStartDate;
                                 if (startDate < e.StartDate)
                                 {
@@ -377,7 +376,6 @@ namespace KS.Umbraco7.Calendar
                                 if (e.MonthYearOption == 1)
                                 {
                                     // Use start date
-
                                     for (DateTime d = yStartDate; d <= eEndDate; d = d.AddYears(1))
                                     {
                                         CalendarEvent ce = new CalendarEvent
@@ -404,7 +402,7 @@ namespace KS.Umbraco7.Calendar
                                         {
                                             // 1st - 5th weekday in month
                                             DateTime ed = d.GetNthWeekofMonth(e.Interval, (DayOfWeek)e.WeekDay);
-                                            //c.Debug += " " + ed.ToString("dd.MM.yyyy hh:mm");
+
                                             if (startDate.Date <= ed.Date && ed <= endDate && d.Month == ed.Month)
                                             {
                                                 CalendarEvent ce = new CalendarEvent
@@ -415,7 +413,7 @@ namespace KS.Umbraco7.Calendar
 
                                                 ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                                 ce.Content = e.Content;
-                                                //ce.Debug = "d: " + d.ToString("dd.MM.yyyy hh:mm") + "  -  " + "ed.month: " + ed.Month + "  d.month: " + d.Month + "  ";
+
                                                 if (!e.ExceptDates.Contains(ce.StartDate.Date) && ce.StartDate <= endDate)
                                                 {
                                                     events.Add(ce);
@@ -434,8 +432,7 @@ namespace KS.Umbraco7.Calendar
 
                                             ce.EndDate = (e.EndDate.HasValue ? ce.StartDate.AddMinutes(durationMinutes) : e.EndDate);
                                             ce.Content = e.Content;
-                                            //ce.Debug = "Siste " + (DayOfWeek)e.weekDay + " i måneden";
-                                            //ce.Debug = "d: " + d.ToString("dd.MM.yyyy hh:mm") + "  -  " + "ed.month: " + ed.Month + "  d.month: " + d.Month + "  ";
+
                                             if (startDate <= ce.StartDate && ce.StartDate <= endDate && !e.ExceptDates.Contains(ce.StartDate.Date))
                                             {
                                                 events.Add(ce);
