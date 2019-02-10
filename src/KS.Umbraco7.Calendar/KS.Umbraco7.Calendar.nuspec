@@ -15,6 +15,7 @@
     <releaseNotes>
 v1.0.0
 New: Nuget package build
+Fix: Performance issues in get events methods
     </releaseNotes>
     <dependencies>
       <dependency id="UmbracoCms.Core" version="[7.4,8.0)" />
