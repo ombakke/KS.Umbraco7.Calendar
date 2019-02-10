@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("KS.Umbraco7.Calendar")]
 [assembly: AssemblyDescription("Simple property editor to configurate recurring events.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Kreativ Strek AS")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("KS.Umbraco7.Calendar")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
