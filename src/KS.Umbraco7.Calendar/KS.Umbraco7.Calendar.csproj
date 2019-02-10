@@ -202,9 +202,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calendar.cs" />
-    <Compile Include="CalendarEvent.cs" />
-    <Compile Include="CalendarEventHandler.cs" />
-    <Compile Include="DateTimeExtentions.cs" />
+    <Compile Include="Models\CalendarEvent.cs" />
+    <Compile Include="Events\CalendarEventHandler.cs" />
+    <Compile Include="Extensions\DateTimeExtentions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

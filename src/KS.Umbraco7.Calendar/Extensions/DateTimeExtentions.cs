@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace KS.Umbraco7.Calendar.Core
+namespace KS.Umbraco7.Calendar.Extensions
 {
     /// <summary>
-    /// Extentions for DateTime
+    /// Various extension methods for <see cref="DateTime"/>.
     /// </summary>
-    public static class DateTimeExtentions
+    public static class DateTimeExtensions
     {
         ///<summary>Gets the first week day following a date.</summary>
         ///<param name="date">The date.</param>

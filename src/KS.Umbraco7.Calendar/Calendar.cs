@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using KS.Umbraco7.Calendar.Extensions;
+using KS.Umbraco7.Calendar.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +8,7 @@ using Umbraco.Core.Logging;
 using Umbraco.Core.Models;
 using Umbraco.Web;
 
-namespace KS.Umbraco7.Calendar.Core
+namespace KS.Umbraco7.Calendar
 {
     /// <summary>
     /// Methods for getting calendar events

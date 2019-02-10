@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Umbraco.Core.Models;
 
-namespace KS.Umbraco7.Calendar.Core
+namespace KS.Umbraco7.Calendar.Models
 {
     [DataContract]
     public class CalendarEvent

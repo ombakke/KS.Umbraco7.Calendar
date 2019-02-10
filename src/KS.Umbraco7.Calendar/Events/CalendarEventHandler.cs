@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using KS.Umbraco7.Calendar.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 using Umbraco.Web;
 
-namespace KS.Umbraco7.Calendar.Core
+namespace KS.Umbraco7.Calendar.Events
 {
     public class CalendarEventHandler : ApplicationEventHandler
     {
