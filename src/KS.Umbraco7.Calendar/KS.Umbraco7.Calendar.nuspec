@@ -23,6 +23,6 @@ Fix: Performance issues in get events methods
     </dependencies>
   </metadata>
   <files>
-    <file src="Web\UI\App_Plugins\KS.Umbraco7.Calendar\**\*.*" target="content\App_Plugins\KS.Umbraco7.Calendar" />
+    <file src="App_Plugins\KS.Umbraco7.Calendar\**" target="content\App_Plugins\KS.Umbraco7.Calendar" />
   </files>
 </package>
