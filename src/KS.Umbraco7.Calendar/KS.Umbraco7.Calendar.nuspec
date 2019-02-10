@@ -21,6 +21,6 @@ New: Nuget package build
     </dependencies>
   </metadata>
   <files>
-    <file src="..\KS.Umbraco7.Calendar.Web\App_Plugins\KS.Umbraco7.Calendar\**\*.*" target="content\App_Plugins\KS.Umbraco7.Calendar" />
+    <file src="Web\UI\App_Plugins\KS.Umbraco7.Calendar\**\*.*" target="content\App_Plugins\KS.Umbraco7.Calendar" />
   </files>
 </package>

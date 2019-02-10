@@ -211,6 +211,37 @@
     <None Include="app.config" />
     <None Include="KS.Umbraco7.Calendar.nuspec" />
     <None Include="packages.config" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\package.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\css\style.css" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\editor.controller.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\editor.html" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\editor.resource.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\js\moment-with-locales.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\da-dk.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\de-de.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\en-gb.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\en-us.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\es-es.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\fr-fr.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\he-il.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\it-it.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\ja-jp.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\ko-kr.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\nb-NO.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\nl-nl.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\nn-NO.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\pl-pl.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\pt-br.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\ru-ru.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\sv-se.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\language\zh-cn.js" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\lang\da-DK.xml" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\lang\en-GB.xml" />
+    <Content Include="Web\UI\App_Plugins\KS.Umbraco7.Calendar\lang\en-US.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

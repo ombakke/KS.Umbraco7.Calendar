@@ -9,10 +9,10 @@ module.exports = function(grunt) {
     var sourceDir = '../src/',
         projectDir = sourceDir + pkg.name + '/';
 
-	// get the root path of the project
+	// Get the root path of the project
     var projectRoot = '../src/' + pkg.name + '/';
 	
-	// get the release paths
+	// Get the release paths
     var releaseDir = 'releases/',
         releaseFilesDir = releaseDir + 'files/';
 
@@ -24,7 +24,6 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: pkg,
-        //pkgMeta: pkgMeta,
         clean: {
             files: [
                 releaseFilesDir + '**/*.*' //'releases/temp/'
@@ -57,7 +56,7 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        cwd: sourceDir + pkg.name + '.Web/App_Plugins/' + pkg.name, //projectDir + '.Web/',
+                        cwd: sourceDir + pkg.name + '/Web/UI/App_Plugins/' + pkg.name,
                         src: ['**'],
                         dest: releaseFilesDir
                     }
