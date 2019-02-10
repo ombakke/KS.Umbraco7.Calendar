@@ -6,7 +6,7 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <licenseUrl>https://github.com/ombakke/KS.Umbraco7.Calendar/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/ombakke/KS.Umbraco7.Calendar</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/ombakke/KS.Umbraco7.Calendar/master/assets/img/calendar-icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
