@@ -8,7 +8,7 @@
     <owners>Ole Martin Bakke &amp; The Umbraco Community</owners>
     <licenseUrl>https://github.com/ombakke/KS.Umbraco7.Calendar/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/ombakke/KS.Umbraco7.Calendar</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/ombakke/KS.Umbraco7.Calendar/master/assets/calendar-icon.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/ombakke/KS.Umbraco7.Calendar/master/assets/icon-calendar.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>Umbraco, Calendar, Events</tags>
     <description>$description$</description>
