@@ -18,6 +18,10 @@ More info can be found at: http://our.umbraco.org/projects/website-utilities/ksu
 
 ## Change log
 
+### Version 1.0.0
+Nuget package build
+Fixes performance issues in get events methods and using XPath instead.
+Added new signature to pass in `IPublishedContent` and remove support for `DynamicPublishedContent`.
 
 ### Version 0.1.1
 
