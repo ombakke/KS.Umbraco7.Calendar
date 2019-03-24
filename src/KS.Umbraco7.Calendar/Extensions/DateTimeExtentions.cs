@@ -45,7 +45,6 @@ namespace KS.Umbraco7.Calendar.Extensions
             return first;
         }
 
-
         /// <summary>
         /// Gets a DateTime representing the last day in the current month
         /// </summary>
