@@ -17,7 +17,7 @@ namespace KS.Umbraco7.Calendar
     {
         ///<summary>Get a list of calendar events from a single node</summary>
         ///<param name="date">Event date</param>
-        ///<param name="propertyType">Alias of the property holding the Datatype KS.Umbraco7.Calendar</param>
+        ///<param name="propertyType">Alias of the property holding the events calendar datatype</param>
         ///<param name="node">The event node</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by date</returns>
@@ -38,7 +38,7 @@ namespace KS.Umbraco7.Calendar
         ///<summary>Get a list of calendar events from a single node</summary>
         ///<param name="startDate">Start date for event list</param>
         ///<param name="endDate">End date for event list</param>
-        ///<param name="propertyType">Alias of the property holding the Datatype KS.Umbraco7.Calendar</param>
+        ///<param name="propertyType">Alias of the property holding the events calendar datatype</param>
         ///<param name="node">The event node</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
@@ -59,7 +59,7 @@ namespace KS.Umbraco7.Calendar
         ///<summary>Get a list of calendar events</summary>
         ///<param name="startDate">Start date for event list</param>
         ///<param name="endDate">End date for event list</param>
-        ///<param name="propertyType">Alias of the property holding the Datatype KS.Umbraco7.Calendar</param>
+        ///<param name="propertyType">Alias of the property holding the events calendar datatype</param>
         ///<param name="documentType">Alias of the document type</param>
         ///<param name="startNode">Start node to look for events in</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
@@ -83,7 +83,7 @@ namespace KS.Umbraco7.Calendar
         ///<summary>Get a list of calendar events</summary>
         ///<param name="startDate">Start date for event list</param>
         ///<param name="endDate">End date for event list</param>
-        ///<param name="propertyType">Alias of the property holding the Datatype KS.Umbraco7.Calendar</param>
+        ///<param name="propertyType">Alias of the property holding the events calendar datatype</param>
         ///<param name="startNode">DynamicPublishedConent to look for events in</param>
         ///<param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
         ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
@@ -103,12 +103,13 @@ namespace KS.Umbraco7.Calendar
             return new List<CalendarEvent>();
         }
 
-        ///<summary>Get a list of calendar events</summary>
-        ///<param name="startDate">Start date for event list</param>
-        ///<param name="endDate">End date for event list</param>
-        ///<param name="propertyType">Alias of the property holding the Datatype KS.Umbraco7.Calendar</param>
-        ///<param name="node">Node where we will be looking for events</param>
-        ///<returns>An ordered List with CalendarEvents ordered by startDate</returns>
+        /// <summary>Get a list of calendar events</summary>
+        /// <param name="startDate">Start date for event list</param>
+        /// <param name="endDate">End date for event list</param>
+        /// <param name="propertyType">Alias of the property holding the events calendar datatype</param>
+        /// <param name="node">Node where we will be looking for events</param>
+        /// <param name="splitNoneRecurring">Optional: Split none recurring events by day, true by default</param>
+        /// <returns>An ordered List with CalendarEvents ordered by startDate</returns>
         private static List<CalendarEvent> GetEventList(DateTime startDate, DateTime endDate, string propertyType, IPublishedContent node, bool splitNoneRecurring = true)
         {
             List<IPublishedContent> nodes = new List<IPublishedContent>
