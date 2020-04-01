@@ -6,7 +6,7 @@
 			editor:{
 				view: "~/app_plugins/KS.Umbraco7.Calendar/editor.html?01751",
 				valueType: "JSON"
-			},
+			}/*,
 			prevalues: {
 				fields: [
 					{
@@ -16,17 +16,15 @@
 						view: "textstring"
 					}
 				]
-			}
+			}*/
 		}
 	],
 	javascript: [
 		"~/app_plugins/KS.Umbraco7.Calendar/js/moment-with-locales.js",
-		"~/app_plugins/KS.Umbraco7.Calendar/js/bootstrap-datetimepicker.min.js",
-		"~/app_plugins/KS.Umbraco7.Calendar/editor.controller.js?01751",
+		"~/app_plugins/KS.Umbraco7.Calendar/editor.controller.js?2",
 		"~/app_plugins/KS.Umbraco7.Calendar/editor.resource.js?0"
 	],
 	css: [
-		"~/app_plugins/KS.Umbraco7.Calendar/css/style.css?01751",
-		"~/app_plugins/KS.Umbraco7.Calendar/css/bootstrap-datetimepicker.min.css"
+		"~/app_plugins/KS.Umbraco7.Calendar/css/style.css?2"
 	]
 }
