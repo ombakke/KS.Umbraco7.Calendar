@@ -1,34 +1,30 @@
-﻿<form ng-controller="KS.CalendarController" name="calendarForm">
+﻿<div ng-controller="KS.CalendarController" name="calendarForm">
     <div class="fullWidth">
         <label>{{language.startDate}}</label>
-        <div class="input-append date datepicker datetime calendarEditor" id="StartDateWrapper" data-inputfield="dtStartDate" data-date="{{data.startDate}}">
-            <input type="datetime" data-format="YYYY-MM-DD HH:mm" id="dtStartDate" ng-model="data.startDate" ng-required="true" name="startdate" />
-            <span class="add-on">
-                <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-            </span>
-        </div>
+        <umb-flatpickr ng-model="data.startDate"
+                       options="dateTimeConfig"
+                       on-change="model.startDatePickerChange(selectedDates, dateStr, instance)">
+        </umb-flatpickr>
     </div>
     <div class="fullWidth">
         <label>{{language.endDate}}</label>
-        <div class="input-append date datepicker calendarEditor" id="EndDateWrapper" data-inputfield="dtEndDate" data-date="{{data.endDate}}">
-            <input type="datetime" data-format="YYYY-MM-DD HH:mm" id="dtEndDate" ng-model="data.endDate" name="enddate" />
-            <span class="add-on">
-                <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-            </span>
-        </div>
+        <umb-flatpickr ng-model="data.endDate"
+                       options="dateTimeConfig"
+                       on-change="model.endDatePickerChange(selectedDates, dateStr, instance)">
+        </umb-flatpickr>
     </div>
-    <span class="help-inline" val-msg-for="enddate" val-toggle-msg="enddateError">{{language.endDateGreaterThanStartDate}}</span>
-    <span class="help-inline" val-msg-for="enddate" val-toggle-msg="enddateRequired">{{language.endDateRequired}}</span>
+    <span class="help-inline" ng-if="model.endDateInvalid">{{language.endDateGreaterThanStartDate}}</span>
+    <span class="help-inline" ng-if="model.endDateRequired">{{language.endDateRequired}}</span>
     <div class="fullWidth">
         <label>{{language.recurrence}}</label>
         <select class="full" ng-model="data.recurrence" ng-options="option.id as option.name for option in options"></select>
     </div>
     <div class="fullWidth" ng-show="data.recurrence > '1'">
         <label>{{language.recurUntil}}</label>
-        <div class="input-append date datepicker calendarEditor" data-inputfield="dateRecurUntil" id="dateRecurUntilWrapper" data-date="{{data.recurUntil}}">
-            <input type="text" ng-model="data.recurUntil" id="dateRecurUntil" data-format="YYYY-MM-DD" name="recurUntil" />
-            <span class="add-on"><i class="icon-calendar" data-date-icon="icon-calendar"></i></span>
-        </div>
+        <umb-flatpickr ng-model="data.recurUntil"
+                       options="dateConfig"
+                       on-change="model.recurUntilDatePickerChange(selectedDates, dateStr, instance)">
+        </umb-flatpickr>
     </div>
 
     <div class="divider" ng-if="data.recurrence > '1'"></div>
@@ -73,18 +69,20 @@
 
     <div class="fullWidth" ng-show="data.recurrence > '1'">
         <label>{{language.except}}</label>
-        <div class="input-append date" data-inputfield="dateExcept" id="dateExceptWrapper">
-            <input type="text" id="dateExcept" data-format="YYYY-MM-DD" name="exceptDate" />
-            <span class="add-on"><i class="icon-calendar" data-date-icon="icon-calendar"></i></span>
-            <button type="button" ng-click="addExceptDate()" class="btn">{{language.add}}</button>
-        </div>
+        <umb-flatpickr ng-model="model.exceptDate"
+                       options="dateConfig"
+                       on-change="model.exceptDatePickerChange(selectedDates, dateStr, instance)">
+        </umb-flatpickr>
+        <button type="button" ng-click="addExceptDate()" class="btn">{{language.add}}</button>
     </div>
 
     <div ng-if="data.recurrence > '1' && data.exceptDates.length > '0'" id="exceptedDays">
         <div ng-repeat="date in data.exceptDates" class="exceptDay">
-            <span class="exDateWrap"><span class="exDate">{{date}}</span>
-            <button type="button" class="btn" ng-click="removeExceptDate(date)">{{language.remove}}</button></span>
+            <span class="exDateWrap">
+                <span class="exDate">{{date}}</span>
+                <button type="button" class="btn" ng-click="removeExceptDate(date)">{{language.remove}}</button>
+            </span>
         </div>
     </div>
 
-</form>
+</div>
