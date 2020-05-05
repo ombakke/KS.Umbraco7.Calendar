@@ -12,12 +12,14 @@ angular.module("umbraco").controller("KS.CalendarController", function ($scope, 
     $scope.dateTimeConfig = {
         enableTime: true,
         dateFormat: "Y-m-d H:i",
-        time_24hr: true
+        time_24hr: true,
+        allowInput: true
     };
 
     $scope.dateConfig = {
         enableTime: false,
-        dateFormat: "Y-m-d"
+        dateFormat: "Y-m-d",
+        allowInput: true
     };
 
     $scope.model.startDatePickerChange = function (selectedDates, dateStr, instance) {
