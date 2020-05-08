@@ -44,5 +44,6 @@
     "recurUntil": "Gentag indtil",
     "except": "Undtagen",
     "add": "Tilføj",
-    "remove": "Fjern"
+    "remove": "Fjern",
+    "currentDate": "Gjældende dato"
 }

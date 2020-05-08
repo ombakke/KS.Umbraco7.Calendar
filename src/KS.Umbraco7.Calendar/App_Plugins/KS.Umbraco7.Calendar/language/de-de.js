@@ -44,5 +44,7 @@
     "recurUntil": "Recur until",
     "except": "Except on",
     "add": "Add",
-    "remove": "Remove"
+        "remove": "Remove"
+        ,
+        "currentDate": "Current date"
 }

@@ -5,6 +5,7 @@
                        options="dateTimeConfig"
                        on-change="model.startDatePickerChange(selectedDates, dateStr, instance)">
         </umb-flatpickr>
+        <div style="font-size:10px;color:#aaa;">{{language.currentDate}}: {{data.startDate}}</div>
     </div>
     <div class="fullWidth">
         <label>{{language.endDate}}</label>
@@ -12,6 +13,7 @@
                        options="dateTimeConfig"
                        on-change="model.endDatePickerChange(selectedDates, dateStr, instance)">
         </umb-flatpickr>
+        <div style="font-size:10px;color:#aaa;">{{language.currentDate}}: {{data.endDate}}</div>
     </div>
     <span class="help-inline" ng-if="model.endDateInvalid">{{language.endDateGreaterThanStartDate}}</span>
     <span class="help-inline" ng-if="model.endDateRequired">{{language.endDateRequired}}</span>
@@ -25,6 +27,7 @@
                        options="dateConfig"
                        on-change="model.recurUntilDatePickerChange(selectedDates, dateStr, instance)">
         </umb-flatpickr>
+        <div style="font-size:10px;color:#aaa;">{{language.currentDate}}: {{data.recurUntil}}</div>
     </div>
 
     <div class="divider" ng-if="data.recurrence > '1'"></div>

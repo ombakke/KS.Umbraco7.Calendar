@@ -44,5 +44,6 @@
     "recurUntil": "Gjenta til",
     "except": "Unntatt",
     "add": "Legg til",
-    "remove": "Fjern"
+    "remove": "Fjern",
+    "currentDate": "Gjeldende dato"
 }
